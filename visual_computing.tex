@@ -137,10 +137,16 @@
 A digital image is a discrete representation of a continuous 2D function $I(x,y)$. In sensors the analog digital has to be converted by an ADC (analog to digital converter). 
 During exposure the photons are accumulated in the sensor wells, with the accumulated charge being transferred line-by-line to the sense amplifiers which
 then pass the signal to the ADC. In CMOS sensors each pixel has its own amplifier and ADC.\\
+The pinhole camera takes picture through a small hole, but cant be infinitly small, there will always be blur, so we use a use lense.\\
+CDD is the more mature technology, with higher production cost, power consumsion, problem lies in Blooming and linearly readout.
+CMOS is the more recent technology that uses the same sensor as CDD, cheap, low power, less sensetiv, but enables smart pixels via other components on chip. Random accsess!
 If we're sampling a signal with a frequency $f_s$ we can only uniquely capture signals with frequencies up to $f_s/2$ (Nyquist frequency). 
 To reconstruct a continuous signal from the sample we could use biliner iterpolation:
 $$\hat{f}(x, y) = (1 - a)(1 - b)F_{i,j} + a(1 - b)F_{i+1,j} + abF_{i+1,j+1} + (1 - a)bF_{i,j+1}$$
-\includegraphics[width=0.6\columnwidth]{bilinear_interplation.png}
+\includegraphics[width=0.6\columnwidth]{bilinear_interplation.png}\\
+sampeling: how often we sample,\\
+Quantanizaion: how many bits per sample (color depth).\\
+
 \begin{subbox}{Noise ($\sigma$)}
 \begin{itemize}
     \item \textbf{Additive Gaussian Noise:} This assumes that the noise follows a normal distribution, i.e. $\tilde{F} - F = \sigma \sim \mathcal{N}(0, \tilde{\sigma}^2)$
