@@ -396,6 +396,11 @@ y &= \frac{Y}{X + Y + Z}
 \end{align*}
 While Y describes brightness, x and y describe color and give us the  CIE chromaticity chart:\\
 \includegraphics[width=0.5\columnwidth]{cie_horsesho.png}\\
+For a given display, the phosphorous coordinates $(x_R, y_R) , (x_G, y_G) , (x_B, y_B)$ tell us what it understands as red, green and blue. They form the triangle above.
+Using these we can easilu convert from RGB to XYZ:
+\includegraphics[width=\columnwidth]{Screenshot 2026-01-29 at 14.21.47.png}
+The unknowns $C_R, C_G, C_B$ result from a known white point $(X_\omega, Y_\omega, Z_\omega)$ for $1=R=G=B$:
+$$\begin{bmatrix} X_\omega \\ Y_\omega \\ Z_\omega \end{bmatrix} = \begin{bmatrix} x_R & x_G & x_B \\ y_R & y_G & y_B \\ (1 - x_R - y_R) & (1 - x_G - y_G) & (1 - x_B - y_B) \end{bmatrix} \cdot \begin{bmatrix} C_R \\ C_G \\ C_B \end{bmatrix}$$
 \begin{itemize}
   \item Primary colors are along the edge of the horseshoe
   \item linear combinations of colors are along straight lines
@@ -453,5 +458,10 @@ take multiple images at different exposures and combine them to get a higher dyn
     \item $\sin(2\pi ux) = \frac{e^{i2\pi ux} - e^{-i2\pi ux}}{2i}$
 \end{itemize}
 \includegraphics[width=0.5\columnwidth]{Screenshot 2026-01-28 at 13.22.38.png}
+\begin{align*}
+  R_x(\theta) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \cos\theta \end{bmatrix}\\
+  R_y(\theta) = \begin{bmatrix} \cos\theta & 0 & \sin\theta \\ 0 & 1 & 0 \\ -\sin\theta & 0 & \cos\theta \end{bmatrix}\\
+  R_z(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix}\\
+\end{align*}
 \end{document}
 
