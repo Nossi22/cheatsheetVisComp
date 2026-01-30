@@ -16,6 +16,8 @@
 \usepackage{tikz}
 \usepackage{tikz-cd} 
 \usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{booktabs}
 
 \usetikzlibrary{calc,matrix}
 
@@ -150,7 +152,7 @@ Quantanizaion: how many bits per sample (color depth).\\
 \begin{subbox}{Noise ($\sigma$)}
 \begin{itemize}
     \item \textbf{Additive Gaussian Noise:} This assumes that the noise follows a normal distribution, i.e. $\tilde{F} - F = \sigma \sim \mathcal{N}(0, \tilde{\sigma}^2)$
-    
+    \item 
     \item \textbf{Multiplicative Noise:} Here, the noise follows the intensity of the original signal: $\tilde{F} - F = \sigma = F * c, \quad c \sim \mathcal{N}(b, \tilde{\sigma}^2)$
     
     \item \textbf{Poisson noise (shot noise):} To model scene-dependent noise, the poisson distribution can be used: $p(k) = \frac{\lambda^k e^{-\lambda}}{k!}$, where $\lambda$ is the signal average. Note that for large averages, the poisson distribution is similar to a gaussian distribution.
@@ -227,6 +229,33 @@ $K$ is a regularization term that penalizes different labels between connected p
 \end{subbox}
 This can be modeled as a graph min-cut problem as follows:
 \includegraphics[width=\columnwidth]{segmentation_graph_cut.png}
+
+\section{Convolution \& Correlation}
+Linear, shift-invariant, associative,commutative (if dimensions identical).
+Shift invariant means that the same operation is applied at each pixel.
+When treating image region and kernel as vector and they're both roughly the same length then kernel-region product is high when they're similar (!template matching!).
+Convolution is the same as correlation but the kernel is punktgespiegelt in the center.
+\begin{subbox}
+  {Important kernels}
+  \textbf{Mean:} $\frac{1}{9}\begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}$ \quad
+  \textbf{Gaussian:} $\frac{1}{16}\begin{bmatrix} 1 & 2 & 1 \\ 2 & 4 & 2 \\ 1 & 2 & 1 \end{bmatrix}$\\
+  \textbf{Laplacian:} $\begin{bmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{bmatrix}$ or $\begin{bmatrix} 1 & 1 & 1 \\ 1 & -8 & 1 \\ 1 & 1 & 1 \end{bmatrix}$\\
+  \textbf{Sobel x:} $\begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}$ \quad
+  \textbf{Sobel y:} $\begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{bmatrix}$\\
+  \textbf{Prewitt x:} $\begin{bmatrix} -1 & 0 & 1 \\ -1 & 0 & 1 \\ -1 & 0 & 1 \end{bmatrix}$ \quad
+  \textbf{Prewitt y:} $\begin{bmatrix} -1 & -1 & -1 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \end{bmatrix}$\\
+  \textbf{diff x:} $\begin{bmatrix} -1 & 1 \end{bmatrix}$ \quad
+  \textbf{diff y:} $\begin{bmatrix} -1 \\ 1 \end{bmatrix}$ \quad
+  \textbf{High pass:} $\begin{bmatrix} -1 & -1 & -1 \\ -1 & 8 & -1 \\ -1 & -1 & -1 \end{bmatrix}$
+\end{subbox}
+Gaussian pyramid: repeatedly convolve image with Gaussian kernel and downsample by factor 2.
+Integrated image: as boxfilter requiere a lot of additions, optimize using integral image where each pixel holds the sum of all pixels above and to the left.\\
+Image Gradient: $\nabla f = \begin{bmatrix} \frac{\partial f}{\partial x},\frac{\partial f}{\partial y}  \end{bmatrix}^T$\\
+Gradient direction: $\theta = \tan^{-1}(\frac{\partial f/\partial y}{\partial f/\partial x})$\\
+Gradient magnituted (edge strength): $|\nabla f| = \sqrt{(\frac{\partial f}{\partial x})^2 + (\frac{\partial f}{\partial y})^2}$\\
+Bc of Noise the edges are not well defined, so we smooth the image first with a Gaussian and then compute the gradient (convolution theroem, we can just ableiten the kernel and then convolve with image $\partial/\partial x  (f * g)= f * \partial g/\partial x$).
+
+
 \section{Fourier Transform}
 $$F(u) = \int_{-\infty}^{\infty} f(x)e^{-i2\pi ux} dx,$$
 
@@ -250,6 +279,81 @@ $u$ and $v$ determine frequency and orientation of the basis function. Pluggin $
 \end{itemize}
 \textbf{Convolution theorem}:$$f(x,y) * h(x,y) \iff F(u,v) \cdot H(u,v)(\text{(element wise)})$$
 
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{} l l l @{}}
+\toprule
+\textbf{Property} & $\mathbf{f(x)}, f(x,y)$ & $\mathbf{F(u)}, F(u, v)$ \\
+\midrule
+Linearity & $\alpha f_1(x) + \beta f_2(x)$ & $\alpha F_1(u) + \beta F_2(u)$ \\
+Duality & $F(x)$ & $f(-u)$ \\
+Convolution & $(f * g)(x)$ & $F(u) \cdot G(u)$ \\
+Product & $f(x) g(x)$ & $(F * G)(u)$ \\
+Timeshift & $f(x - x_0)$ & $e^{-2 \pi i u x_0} \cdot F(u)$ \\
+Freq. shift & $e^{2 \pi i u_0 x} f(x)$ & $F(u - u_0)$ \\
+Differentiation & $\frac{d^n}{dx^n} f(x)$ & $\left(\frac{i}{2 \pi} u\right)^n F(u)$ \\
+Multiplication & $x f(x)$ & $\frac{i}{2 \pi} \frac{d}{du} F(u)$ \\
+Stretching & $f(a x)$ & $\frac{1}{|a|} F\left(\frac{u}{a}\right)$ \\
+Deriv. Fourier & $x^n f(x)$ & $i^n \frac{d^n}{du^n} F(u)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{@{} l l @{}}
+\toprule
+$\mathbf{f(x)}, f(x,y)$ & $\mathbf{F(u)}, F(u, v)$ \\
+\midrule
+$\sin(2 \pi u_0 x + 2 \pi v_0 y)$ & $\frac{1}{2i} [\delta(u - u_0, v - v_0) - \delta(u + u_0, v + v_0)]$ \\
+$\cos(2 \pi u_0 x + 2 \pi v_0 y)$ & $\frac{1}{2} [\delta(u - u_0, v - v_0) + \delta(u + u_0, v + v_0)]$ \\
+$\sin(2 \pi u_0 x)$ & $\frac{1}{2i} [\delta(u - u_0) - \delta(u + u_0)]$ \\
+$\cos(2 \pi u_0 x)$ & $\frac{1}{2} [\delta(u - u_0) + \delta(u + u_0)]$ \\
+$1$ & $\delta(u)$ \\
+$\text{Box}(x) = \begin{cases} 1 & x \in [-1/2, 1/2] \\ 0 & \text{else} \end{cases}$ & $\operatorname{sinc}(u) = \frac{\sin(\pi u)}{\pi u} \text{ (norm. sinc)}$ \\
+$\operatorname{sinc}(u) = \frac{\sin(\pi u)}{\pi u}$ & $\text{Box}(x) = \begin{cases} 1 & x \in [-1/2, 1/2] \\ 0 & \text{else} \end{cases}$ \\
+$\operatorname{sinc}(u) = \frac{\sin(u)}{u}$ & $\pi \text{Box}(\pi x)$ \\
+$\sum_{n=-\infty}^\infty \delta(x - n T)$ & $\frac{1}{T} \sum_{n=-\infty}^\infty \delta(u - n/T)$ \\
+$h(x,y) = f(x)g(x)$ & $H(u, v) = F(u) G(v)$ \\
+$\delta(x)$ & $1$ \\
+$\delta(x - x_0)$ & $e^{-2 i \pi u x_0}$ \\
+$e^{2 i \pi(u_0 x + v_0 y)}$ & $\delta(u - u_0, v - v_0)$ \\
+$e^{-a x^2}$ & $\sqrt{\frac{\pi}{a}} \exp\left(-\frac{\pi^2 u^2}{a}\right)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Unitary transforms (PCA / KL)}
+\begin{mainbox}{Karhunen-Loeve/(PCA)}
+        \begin{itemize}
+            \item \textbf{Normalize} (remove brightness var.): 
+            \[ x'_i = \frac{x_i}{\|x_i\|} \]
+            \item \textbf{Center data} (subtract mean): 
+            \[ x''_i = x'_i - \mu, \quad \text{where } \mu = \frac{1}{N} \sum x'_i \]
+            \item \textbf{Compute Covariance Matrix:} 
+            \[ \Sigma = \frac{1}{N - 1} \sum x''_i (x''_i)^T \]
+            \item \textbf{Eigendecomposition:} Solve $\Sigma e = \lambda e$ (e.g., via SVD: $\Sigma = U \Lambda U^T$).
+            \item \textbf{Define $U_k$:} The first $k$ eigenvectors of $\Sigma$, $U_k = [u_1, \dots, u_k]$ (directions with largest variance).
+            \item \textbf{Projection (Compression):} 
+            \[ \text{PCA}(x_i) = U_k^T (x_i - \mu) = U_k^T x''_i \]
+            \item \textbf{Reconstruction:} To decompress (where $y_i$ is the lower-dim representation):
+            \[ \text{PCA}^{-1}(y_i) = U_k y_i + \mu \]
+        \end{itemize}
+        \begin{subbox}{PCA storage space}
+          Given $n$ images of size $x \times y$, we want to store the dataset given a budget of $Z$ units of space. What is max number $K$ of princip. comp. allowed? \\
+  We need to store dataset mean $\mu: x \times y$, truncated eigenmat. $U_k: (x \times y) \times K$, compr. imgs. ${y_i}: n \times K$
+        \end{subbox}
+\end{mainbox}
+
+\subsection{Eigenfaces, Fisherfaces}
+
+\subsection{JPEG Compression}
+JPEG and JPG are the same format; JPG exists because older Windows versions required 3-letter extensions.
 
 
 \section{Sampling}
@@ -260,6 +364,9 @@ As the comb samples get further apart, the frequency samples get closer together
   $f_{\max} \cdot 2 \le 1/x=\text{sampling rate}$
 Bc of the convolution theorem it holds: $f_\text{comb} \cdot f_\text{spatial} = f_\text{comb} *F(u) (= f_\text{frequency})$
 \end{subbox}
+
+
+
 
 
 \section{Optical Flow}
@@ -395,17 +502,12 @@ x &= \frac{X}{X + Y + Z} \\
 y &= \frac{Y}{X + Y + Z}
 \end{align*}
 While Y describes brightness, x and y describe color and give us the  CIE chromaticity chart:\\
-\includegraphics[width=0.5\columnwidth]{cie_horsesho.png}\\
+\includegraphics[width=0.7\columnwidth]{cie.jpg}\\
 For a given display, the phosphorous coordinates $(x_R, y_R) , (x_G, y_G) , (x_B, y_B)$ tell us what it understands as red, green and blue. They form the triangle above.
 Using these we can easilu convert from RGB to XYZ:
 \includegraphics[width=\columnwidth]{Screenshot 2026-01-29 at 14.21.47.png}
 The unknowns $C_R, C_G, C_B$ result from a known white point $(X_\omega, Y_\omega, Z_\omega)$ for $1=R=G=B$:
 $$\begin{bmatrix} X_\omega \\ Y_\omega \\ Z_\omega \end{bmatrix} = \begin{bmatrix} x_R & x_G & x_B \\ y_R & y_G & y_B \\ (1 - x_R - y_R) & (1 - x_G - y_G) & (1 - x_B - y_B) \end{bmatrix} \cdot \begin{bmatrix} C_R \\ C_G \\ C_B \end{bmatrix}$$
-\begin{itemize}
-  \item Primary colors are along the edge of the horseshoe
-  \item linear combinations of colors are along straight lines
-  \item linear combinations of 3 colors form a triangle
-\end{itemize}
 \subsection{CMY color space}
 \begin{itemize}
     \item \textbf{Passive Systems:} Used for printers (subtractive mixing).
@@ -440,13 +542,28 @@ $$\begin{bmatrix} X_\omega \\ Y_\omega \\ Z_\omega \end{bmatrix} = \begin{bmatri
         \item \textbf{Saturation (S):} Purity/Richness (radius from center; $0$ = gray).
         \item \textbf{Value (V):} Brightness/Lightness (vertical axis).
     \end{itemize}
-    \item \textbf{RGB $\to$ HSV Conversion:} code TODO.\\
+    \item \textbf{RGB $\to$  HSV Conversion:} code TODO.\\
 \end{itemize}
+
 \subsection{CIELAB and CIELUV Color Spaces}
 moving on the horseshoe changes the perceived color difference non-linearly (sometimes tini movement and big change in precived color, sometimes the oposit). To fix this we can define a new color space where euclidean distances correspond to perceived color differences. 
 \subsection{high dinamic range (HDR)}
 take multiple images at different exposures and combine them to get a higher dynamic range.
+\begin{enumerate}
+    \item \textbf{RGB $\to$ YUV:} Y = luminance/brightness, UV = color/chrominance. Humans more sensitive to brightness than color $\Rightarrow$ compress colors with \textbf{chroma subsampling} (e.g., use color of upper-left pixel for 4×4 grid).
+    \item \textbf{Block DCT:} Split image into 8×8 blocks for each YUV component, apply 2D DCT. Results in 64 values: top-left = low freq., bottom-right = high freq. DCT is a variant of DFT with fast implementation and only real values.
+    \item \textbf{Quantization: } Compress using integer division with weighted matrix (quantization table), aggressively compress bottom-right (high freq.). Then zig-zag run-length encoding followed by Huffman coding.
+\end{enumerate}
+\textbf{Properties:} High compression (10–100×), 24-bit colors. \textbf{Artifacts:} incorrect colors, aliasing, softened edges (sharp edges require high frequencies).\\
+\textbf{JPEG2000:} Uses Haar wavelet transform globally (not just 8×8 blocks) on successively downsampled image (image pyramid).
 
+\begin{subbox}{Image Pyramids}
+Iteratively apply approximation filter + downsampler.
+\begin{itemize}
+    \item \textbf{Gaussian pyramid:} Successively blurred and downsampled versions.
+    \item \textbf{Laplacian pyramid:} Difference between two consecutive levels of Gaussian pyramid (stores detail/edges).
+\end{itemize}
+\end{subbox}
 
 \section{Miscallaneous}
 \begin{itemize}
