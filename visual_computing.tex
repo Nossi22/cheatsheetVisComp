@@ -234,7 +234,10 @@ This can be modeled as a graph min-cut problem as follows:
 Linear, shift-invariant, associative,commutative (if dimensions identical).
 Shift invariant means that the same operation is applied at each pixel.
 When treating image region and kernel as vector and they're both roughly the same length then kernel-region product is high when they're similar (!template matching!).
-Convolution is the same as correlation but the kernel is punktgespiegelt in the center.
+Convolution is the same as correlation but the kernel is punktgespiegelt in the center.\\
+For continuous and discrete signals, convolution is defined as follows:
+$$(f*g)(t)=\int_{-\infty}^{\infty} f(\tau)\,g(t-\tau)\,d\tau$$
+$$K * I = \sum_{i=-k}^{k} \sum_{j=-k}^{k} K(-i, -j) \cdot I(x+i, y+j),$$
 \begin{subbox}
   {Important kernels}
   \textbf{Mean:} $\frac{1}{9}\begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}$ \quad
@@ -564,7 +567,15 @@ Iteratively apply approximation filter + downsampler.
     \item \textbf{Laplacian pyramid:} Difference between two consecutive levels of Gaussian pyramid (stores detail/edges).
 \end{itemize}
 \end{subbox}
-
+\section{Transforms}
+Rigid Transform: Orthogonal transform + translation.\\
+\section{Phong shading}
+To reflect a vector $a$ across another vector $b$:
+$$\mathbf{a}_{reflected} = 2\frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}}\mathbf{b} - \mathbf{a}$$
+\section{Geometry and Textures}
+To map texture coordinates $(u,v)$ to tangent space we use the matrix $A$:
+$$\left[\begin{array}{cc} | & | \\ \vec{T} & \vec{B} \\ | & | \end{array}\right] = \mathbf{A} = \begin{bmatrix} x_2 & x_3 \\ y_2 & y_3 \\ z_2 & z_3 \end{bmatrix} \begin{bmatrix} u_2 & u_3 \\ v_2 & v_3 \end{bmatrix}^{-1}$$
+\includegraphics[width=\columnwidth]{Screenshot 2026-01-31 at 15.58.28.png}
 \section{Miscallaneous}
 \begin{itemize}
     \item $e^{i\pi} + 1 = 0$
@@ -574,12 +585,16 @@ Iteratively apply approximation filter + downsampler.
     \item $\cos(2\pi ux) = \frac{e^{i2\pi ux} + e^{-i2\pi ux}}{2}$
     \item $\sin(2\pi ux) = \frac{e^{i2\pi ux} - e^{-i2\pi ux}}{2i}$
 \end{itemize}
-\includegraphics[width=0.5\columnwidth]{Screenshot 2026-01-28 at 13.22.38.png}
+\includegraphics[width=0.5\columnwidth]{Screenshot 2026-01-28 at 13.22.38.png}\\
 positive $\theta$ is counter-clockwise rotation.
 \begin{align*}
   R_x(\theta) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \cos\theta \end{bmatrix}\\
   R_y(\theta) = \begin{bmatrix} \cos\theta & 0 & \sin\theta \\ 0 & 1 & 0 \\ -\sin\theta & 0 & \cos\theta \end{bmatrix}\\
   R_z(\theta) = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix}\\
 \end{align*}
+2x2 matrix inverse:
+$$A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \implies A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
+angle between two vectors:
+$$\theta = \arccos\left(\frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}| \cdot |\mathbf{v}|}\right)$$
 \end{document}
 
