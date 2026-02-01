@@ -1,5 +1,5 @@
 % Basic stuff
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,9pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[nswissgerman]{babel}
 \usepackage{scrextend}
@@ -160,18 +160,13 @@ If we're sampling a signal with a frequency $f_s$ we can only uniquely capture s
 To reconstruct a continuous signal from the sample we could use biliner iterpolation:
 $$\hat{f}(x, y) = (1 - a)(1 - b)F_{i,j} + a(1 - b)F_{i+1,j} + abF_{i+1,j+1} + (1 - a)bF_{i,j+1}$$
 \includegraphics[width=0.6\columnwidth]{bilinear_interplation.png}\\
-\begin{subbox}{Nyquist-Shannon sampling theorem}
-Sample frequency must be at least twice as big as the highest frequency in the signal/image: $\omega_s > 2\,\omega_{\max}$ (strict inequality).
-\end{subbox}
 sampeling: how often we sample,\\
 Quantanizaion: how many bits per sample (color depth).\\
 \textbf{Geometric resolution:} number of pixels per area.\\
 \textbf{Radiometric resolution:} number of bits per pixel.\\
-
-\begin{subbox}{Noise ($\sigma$)}
+\subsection{Noise ($\sigma$)}
 \begin{itemize}
     \item \textbf{Additive Gaussian Noise:} This assumes that the noise follows a normal distribution, i.e. $\tilde{F} - F = \sigma \sim \mathcal{N}(0, \tilde{\sigma}^2)$
-    \item 
     \item \textbf{Multiplicative Noise:} Here, the noise follows the intensity of the original signal: $\tilde{F} - F = \sigma = F * c, \quad c \sim \mathcal{N}(b, \tilde{\sigma}^2)$
     
     \item \textbf{Poisson noise (shot noise):} To model scene-dependent noise, the poisson distribution can be used: $p(k) = \frac{\lambda^k e^{-\lambda}}{k!}$, where $\lambda$ is the signal average. Note that for large averages, the poisson distribution is similar to a gaussian distribution.
@@ -187,7 +182,6 @@ There are a number of statistics that aim to quantify noise over an image. Among
     
     \item \textbf{Peak Signal-to-Noise-Ratio (PSNR):} $\sigma_{SNR} = \frac{F_{max}}{E[\sigma]}$. For most images, $F_{max}$ is 255.
 \end{itemize}
-\end{subbox}
 \textbf{Color camera concepts:} Prism (splitting light, 3 sensors, requires good alignment), Filter mosaic (coat filter on sensor, grid, introduces aliasing), Filter wheel (rotate filter in front of lens, static image), CMOS sensor (absorbing colors at different depths), Rolling shutter effect (sequential readout of pixels while camera is moving).
 \section{Image Segmentation}
 Classicfication problem where we partition image into disjoint segments.
@@ -572,22 +566,12 @@ Partition video into moving objects -- generally pretty difficult. Practical: \t
 \end{subbox}
 \textbf{MPEG Group of Pictures (GOP)} starts with I-frame, ends with B- (open) or P-frame (closed).
 
-\section{CNN and Radon Transform}
+\section{CNN}
 Given input $x$, learning target $y$, loss function $\mathcal{L}$ compute kernel weights $\theta$ using prediction $f(x, \theta)$: $\arg\min_{\theta} \mathcal{L}(y, f(x, \theta))$. Linear classifier $f(x, \theta) = W x + b$ where $\theta = \{W, b\}$. Use activation func. $\phi$ (sigmoid, \textbf{ReLU}, tanh, ...) to introduce non-linearity. Use gradient descent and back propagation (recursive appl. of chain rule to compute gradients) to find $\theta$. Transformers, GANs, stable diffusion etc enable modern VC breakthroughs.
 
 Classification: $f(x_1, \theta)$ as score, take class with larger score. With $y_i \in \mathbb{N}, s_i = f(x_i, \theta)$, we get loss function: $\mathcal{L}(y, f(x, \theta)) = - \sum_{i = 1}^N \log \left(\frac{\exp(s_{i, y_i})}{\sum_j \exp(s_{i, j})}\right)$.
 
 Regression: $f(x_1, \theta)$ as value, can be used for classification by comparing value. With $y_i \in \mathbb{R}^n, s_i = f(x_i, \theta)$, we get: $\mathcal{L}(y, f(x, \theta)) = \sum_{i = 1}^N \|y_i - s_i\|^2$.
-
-\begin{subbox}{Radon transform}
-Given object with unknown density $f(x, y)$, find $f$ by sending rays from all dirs through object and measure absorption on the other side. Assume parallel beams for given angle and no spreading of beam. X-Ray along line $L$ at distance $s$ has intensity $I(s)$, travelling $ds$ reduces intens. by $dI$. reduction depends on intens. and optical density $u(s)$: $dI / I(s) = -u(s) ds$. $I_{\text{finish}} = I_{\text{start}} \exp(-R)$ where $R = \int_L u(s) \, ds$ for the path through the object $L$. Radon transform of $f(x, y)$: $R f(L) = \int_L f(x) |dx|$.
-
-With $(x, y) = (\rho \cos \theta - s \sin \theta, \rho \sin \theta + s \cos \theta)$ and $\rho$ the distance from the object center and $\theta$ the angle, $s$ the distance along the line, we get:
-$R(\rho, \theta) = \int u(x, y) \, ds$. We now want to find $u(x, y)$ given $R(\rho, \theta)$.
-\end{subbox}
-The continuous case of a radon transform of a function $u$ is:
-$$ R[u](\rho, \theta) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} u(x, y) \delta(\rho - x \cos \theta - y \sin \theta) \, dx \, dy $$
-\textbf{Properties of RT:} Linear, shifting input shifts the RT (does not affect angle), rotating input rotates RT by same angle, RT of 2D convolution is 1D convolution of RT with respect to $\rho$, i.e. $R(f *_\text{2D} g) = R(f) *_\text{1D} R(g)$, RHS with fixed $\theta$, convolution with respect to $\rho$.
 
 \textbf{Fourier Slice Theorem:} $G_\theta(\omega) = F[f](\omega \cos(\theta), \omega \sin(\theta))$ where $G_\theta(\omega) = \int_{-\infty}^{\infty} R[f](\rho, \theta)  \exp(-2 \pi i \omega \rho) \, d\rho = F[R[f](\rho, \theta)](\omega)$, 1D FT of projection at fixed angle $\theta$ is slice of 2D FT of image.
 
@@ -600,7 +584,6 @@ $$ R[u](\rho, \theta) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} u(x, y) 
   \item 2D inverse FT the above, then sum with previous image (backpropagate)
 \end{itemize}
 Requires precise attn. meas., sensitive to noise, unstable, blurring in final image (add high-pass filter in Fourier domain after 2nd step to prevent).
-\section{Convolution and Filtering}
 \section{General Graphics}
 Graphics Pipeline Stages:\\
 \begin{tabularx}{\columnwidth}{|l|X|}
@@ -658,8 +641,7 @@ Spectral Power Distribution: \\
 $P(\lambda)=\text{intensity at wavelength }\lambda$.\\
 Our eye has 3 types of cones (S (blue),M (green),L (red)) with different sensitivity curves. Eye projects $P(\lambda)$ into 3D subspace
 using these three basis functions/vectors (two diffrent SPD might look exactly the same to us).\\
-\includegraphics[width=0.45\columnwidth]{other-cheatsheet/ciergb.png}\\
-\begin{subbox}{Color spaces}
+\subsection{Color spaces}
 \begin{itemize}
   \item \textbf{RGB}: useful for displays, RGB colors specified
   \item \textbf{CIE XYZ}: change of basis to avoid negative comps. From xyY via $X = (xY)/y$, $Y=Y$, $Z = Y/y - (xY)/y - Y$
@@ -670,7 +652,6 @@ using these three basis functions/vectors (two diffrent SPD might look exactly t
   \item \textbf{HSV / HLS}: hue, saturation, value/lightness; intuitive for artists
   \item \textbf{CIELAB / CIELUV}: perceptually uniform color space
 \end{itemize}
-\end{subbox}
 \subsection{CIE}
 \includegraphics[width=0.6\columnwidth]{CIE_graph.png}\\
 $435.8, 546.1$ and $700.0 nm$ (arbitrary choosen) where controlled (dimmed/increased) by observers to match a simulus color. Result is seen above, $x$ is frequency and $y$ is the dimmed strength that the participents did.
@@ -817,9 +798,6 @@ Rotating a point $p = \begin{bmatrix} x & y & z \end{bmatrix}^T$ around axis $u 
   \item Rotated point $p' = q p q^{-1}$. Convert to cartesian.
 \end{itemize}
 \end{subbox}
-\section{Phong shading}
-To reflect a vector $a$ across another vector $b$:
-$$\mathbf{a}_{reflected} = 2\frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}}\mathbf{b} - \mathbf{a}$$
 \section{Lighting \& Shading}
 Lighting: Modelling physical interactions between materials and light sources.\\
 Shading: Process of determining color of pixel.
@@ -951,6 +929,9 @@ $$N_i^0(u) = \begin{cases} 1 & u \in [u_i, u_{i+1}] \\ 0 & \text{else} \end{case
 
 Partition of unity $\sum_i^k N_i^n(u) = 1$, positivity $N_i^n(u) \ge 0$, compact support $N_i^n(u) = 0$ for $u \notin [u_i, u_{i+n+1}]$, continuity $N_i^n$ is $(n-1)$ times differentiable, local control, affine invariant.
 \end{subbox}
+\begin{subbox}
+B-spline of degree $n$ and $k +1=$ de Boor point consequently requires $n+k+2=$knots. Denk nach David 
+\end{subbox}
 
 \textbf{Example:} $N_i^1(u) = \begin{cases} \frac{u-u_i}{u_{i+1}-u_i} & u \in [u_i, u_{i+1}] \\ \frac{u_{i+2}-u}{u_{i+2}-u_{i+1}} & u \in [u_{i+1}, u_{i+2}] \end{cases}$
 
@@ -1022,5 +1003,7 @@ positive $\theta$ is counter-clockwise rotation.
 $$A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \implies A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$$
 angle between two vectors:
 $$\theta = \arccos\left(\frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}| \cdot |\mathbf{v}|}\right)$$
+To reflect a vector $a$ across another vector $b$:
+$$\mathbf{a}_{reflected} = 2\frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}}\mathbf{b} - \mathbf{a}$$
 \end{document}
 
