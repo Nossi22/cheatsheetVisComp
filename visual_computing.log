@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.12)  31 JAN 2026 16:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.12)  1 FEB 2026 10:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1076,247 +1076,519 @@ LaTeX Font Info:    Trying to load font information for U+wasy on input line 139
  (/usr/local/texlive/2023/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 )
-Overfull \hbox (3.90405pt too wide) detected at line 147
+Overfull \hbox (3.90405pt too wide) detected at line 161
 []\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; y\OT1/cmr/m/n/8 ) = (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 a\OT1/cmr/m/n/8 )(1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 b\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 F[] \OT1/cmr/m/n/8 + \OML/cmm/m/it/8 a\OT1/cmr/m/n/8 (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 b\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 F[] \OT1/cmr/m/n/8 + \OML/cmm/m/it/8 abF[] \OT1/cmr/m/n/8 + (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 a\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 bF[]
  []
 
 <bilinear_interplation.png, id=43, 459.7175pt x 276.03125pt>
 File: bilinear_interplation.png Graphic file (type png)
 <use bilinear_interplation.png>
-Package pdftex.def Info: bilinear_interplation.png  used on input line 148.
+Package pdftex.def Info: bilinear_interplation.png  used on input line 162.
 (pdftex.def)             Requested size: 149.09395pt x 89.52376pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--151
+Underfull \hbox (badness 10000) in paragraph at lines 161--165
 
  []
 
 
-Underfull \hbox (badness 1502) in paragraph at lines 158--159
+Underfull \hbox (badness 10000) in paragraph at lines 166--170
+
+ []
+
+
+Underfull \hbox (badness 1502) in paragraph at lines 177--178
 []\OT1/cmr/bx/n/8 Poisson noi-se (shot noi-se): \OT1/cmr/m/n/8 To mo-del scene-
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
+[]\OT1/cmr/bx/n/8 Rician noi-se (MRI): $\OML/cmm/m/it/8 p\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 I\OT1/cmr/m/n/8 ) =
+ []
+
+
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <9.59998> not available
-(Font)              size <10> substituted on input line 173.
+(Font)              size <10> substituted on input line 195.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <9.59998> not available
-(Font)              size <10> substituted on input line 173.
-
-
-Overfull \hbox (10.62593pt too wide) detected at line 191
-[]
- []
-
-
-Overfull \hbox (18.47932pt too wide) detected at line 219
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 219--229
-
- []
+(Font)              size <10> substituted on input line 195.
 
 [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 {/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./bilinear_interplation.png>]
-<segmentation_graph_cut.png, id=72, 896.34875pt x 557.08125pt>
-File: segmentation_graph_cut.png Graphic file (type png)
-<use segmentation_graph_cut.png>
-Package pdftex.def Info: segmentation_graph_cut.png  used on input line 231.
-(pdftex.def)             Requested size: 248.48741pt x 154.43462pt.
+Overfull \hbox (10.62593pt too wide) detected at line 217
+[]
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--253
-\OT1/cmr/bx/n/8 diff x: $[]$  diff y: $[]$  High pass:
+LaTeX Font Info:    Calculating math sizes for size <9.59998> on input line 238.
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <9.59998> not available
+(Font)              size <10> substituted on input line 238.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <9.59998> not available
+(Font)              size <10> substituted on input line 238.
+
+
+LaTeX Font Warning: Font shape `U/wasy/m/n' in size <9.59998> not available
+(Font)              size <10> substituted on input line 238.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 238.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 238.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\alpha' on input line 238.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 238.
+
+
+Overfull \hbox (18.47932pt too wide) detected at line 253
+[]
  []
 
 
-Overfull \hbox (10.98318pt too wide) in paragraph at lines 267--270
+Underfull \hbox (badness 10000) in paragraph at lines 253--263
+
+ []
+
+<segmentation_graph_cut.png, id=67, 896.34875pt x 557.08125pt>
+File: segmentation_graph_cut.png Graphic file (type png)
+<use segmentation_graph_cut.png>
+Package pdftex.def Info: segmentation_graph_cut.png  used on input line 265.
+(pdftex.def)             Requested size: 248.48741pt x 154.43462pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 278--288
+\OT1/cmr/bx/n/8 diff x: $[]$  diff y: $[]$  High pass:
+ []
+
+[2 <./segmentation_graph_cut.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 302--304
+[]\OT1/cmr/m/n/8 Template mat-ching: $\OML/cmm/m/it/8 I[] \OT1/cmr/m/n/8 = \OML/cmm/m/it/8 K \OMS/cmsy/m/n/8 ^^N \OML/cmm/m/it/8 I$ $I\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; y\OT1/cmr/m/n/8 ) =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--304
+
+ []
+
+
+Underfull \hbox (badness 7326) in paragraph at lines 306--309
+[]\OT1/cmr/m/n/8 Point spread func-ti-on: $\OML/cmm/m/it/8 I[] \OT1/cmr/m/n/8 = \OML/cmm/m/it/8 K \OMS/cmsy/m/n/8 ^^C \OML/cmm/m/it/8 I$ $I[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; y\OT1/cmr/m/n/8 ) =
+ []
+
+
+Overfull \hbox (27.46132pt too wide) in paragraph at lines 342--344
+[]\OT1/cmr/bx/n/8 Corner de-tec-ti-on: \OT1/cmr/m/n/8 De-fi-ne lo-cal dis-pla-ce-ment sen-si-ti-vi-ty: $\OML/cmm/m/it/8 S\OT1/cmr/m/n/8 (^^A\OML/cmm/m/it/8 x; \OT1/cmr/m/n/8 ^^A\OML/cmm/m/it/8 y\OT1/cmr/m/n/8 ) =
+ []
+
+
+Underfull \hbox (badness 2689) in paragraph at lines 348--349
+[]\OT1/cmr/m/n/8 Compute ma-trix $\OT1/cmr/bx/n/8 M$\OT1/cmr/m/n/8 . Com-pu-te $\OML/cmm/m/it/8 C\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; y\OT1/cmr/m/n/8 ) = [](\OT1/cmr/bx/n/8 M\OT1/cmr/m/n/8 ) \OMS/cmsy/m/n/8 ^^@
+ []
+
+<other-cheatsheet/harris-corner-detection.png, id=84, 718.685pt x 366.36874pt>
+File: other-cheatsheet/harris-corner-detection.png Graphic file (type png)
+<use other-cheatsheet/harris-corner-detection.png>
+Package pdftex.def Info: other-cheatsheet/harris-corner-detection.png  used on input line 350.
+(pdftex.def)             Requested size: 173.94043pt x 88.66821pt.
+[3 <./other-cheatsheet/harris-corner-detection.png>]
+Overfull \hbox (10.98318pt too wide) in paragraph at lines 362--365
 \OT1/cmr/m/n/8 Am-pli-tu-de/-Ma-gni-tu-de: $\OML/cmm/m/it/8 A\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 u\OT1/cmr/m/n/8 ) = \OMS/cmsy/m/n/8 j\OML/cmm/m/it/8 F\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 u\OT1/cmr/m/n/8 )\OMS/cmsy/m/n/8 j \OT1/cmr/m/n/8 = []\OML/cmm/m/it/8 :$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 271--272
+Underfull \hbox (badness 10000) in paragraph at lines 366--367
 
  []
 
 
-Overfull \hbox (25.13182pt too wide) in paragraph at lines 311--331
+Overfull \hbox (20.51149pt too wide) in paragraph at lines 378--382
+\OT1/cmr/m/n/8 vec-to-ri-zed image. $\OML/cmm/m/it/8 F\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 u; v\OT1/cmr/m/n/8 ) = [][] [][] \OML/cmm/m/it/8 f\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; y\OT1/cmr/m/n/8 ) \OMS/cmsy/m/n/8 ^^A [] []$\OT1/cmr/m/n/8 ,
+ []
+
+
+Overfull \hbox (8.28465pt too wide) in paragraph at lines 378--382
+\OT1/cmr/m/n/8 Du-al Trans-form: $\OML/cmm/m/it/8 f\OT1/cmr/m/n/8 (\OMS/cmsy/m/n/8 ^^@\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 ) = \OML/cmm/m/it/8 F\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 F\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 f\OT1/cmr/m/n/8 ))(\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 )$. \OT1/cmr/bx/n/8 Re-le-vant: $[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 ) = []$,
+ []
+
+<other-cheatsheet/fourier-transforms.png, id=93, 554.07pt x 420.57124pt>
+File: other-cheatsheet/fourier-transforms.png Graphic file (type png)
+<use other-cheatsheet/fourier-transforms.png>
+Package pdftex.def Info: other-cheatsheet/fourier-transforms.png  used on input line 409.
+(pdftex.def)             Requested size: 248.48741pt x 188.61357pt.
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 409--410
+[][] 
+ []
+
+
+Overfull \hbox (25.13182pt too wide) in paragraph at lines 420--440
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[2 <./segmentation_graph_cut.png>]
-<sampling.jpg, id=81, 647.41875pt x 567.11874pt>
-File: sampling.jpg Graphic file (type jpg)
-<use sampling.jpg>
-Package pdftex.def Info: sampling.jpg  used on input line 363.
-(pdftex.def)             Requested size: 248.48741pt x 217.67073pt.
-<Screenshot 2026-01-28 at 15.30.42.png, id=82, 664.4825pt x 186.6975pt>
-File: Screenshot 2026-01-28 at 15.30.42.png Graphic file (type png)
-<use Screenshot 2026-01-28 at 15.30.42.png>
-Package pdftex.def Info: Screenshot 2026-01-28 at 15.30.42.png  used on input line 365.
-(pdftex.def)             Requested size: 248.48741pt x 69.81766pt.
-
-Underfull \hbox (badness 2368) in paragraph at lines 439--439
-\OT1/cmr/m/n/8 lo-cal ob-ject space to world
+[4 <./other-cheatsheet/fourier-transforms.png>]
+Overfull \hbox (13.70767pt too wide) in paragraph at lines 474--475
+\OT1/cmr/m/n/8 ma-xi-mi-zed (i.e. mi-ni-mi-zing wi-thin class dif-fe-rence, ma-xi-mi-zing between-
  []
 
 
-Underfull \hbox (badness 1337) in paragraph at lines 439--439
-\OT1/cmr/m/n/8 space to ca-me-ra/view space,
- []
-
-
-Underfull \hbox (badness 1831) in paragraph at lines 439--439
-\OT1/cmr/m/n/8 (tri-angles, li-nes, points) and
- []
-
-
-Underfull \hbox (badness 5091) in paragraph at lines 439--439
-[]|\OT1/cmr/m/n/8 Clips geo-me-try against the
- []
-
-
-Underfull \hbox (badness 1264) in paragraph at lines 439--439
-[]|\OT1/cmr/m/n/8 Calculates the co-lor of each
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 439--439
-[]|\OT1/cmr/m/n/8 Determines vi-si-bi-li-ty using
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 439--439
-\OT1/cmr/m/n/8 depth tes-ting (z-buffering)
- []
-
-
-Underfull \hbox (badness 5847) in paragraph at lines 439--439
-[]|\OT1/cmr/m/n/8 Outputs the fi-nal ren-de-red
- []
-
-
-Overfull \vbox (282.31956pt too high) has occurred while \output is active []
-
- [3 <./sampling.jpg> <./Screenshot 2026-01-28 at 15.30.42.png>]
-Underfull \hbox (badness 1412) in paragraph at lines 451--451
-\OT1/cmr/m/n/8 ments; in-ter-po-la-tes ver-tex at-tri-bu-tes
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 451--453
-
- []
-
-
-Overfull \hbox (3.19627pt too wide) in paragraph at lines 468--473
-\OT1/cmr/m/n/8 Light is a elec-tro-ma-gne-tic ra-dia-ti-on at Fre-quen-cy (wa-ve-length $400\OML/cmm/m/it/8 nm$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 468--473
-
- []
-
-<CIE_graph.png, id=96, 650.43pt x 406.51875pt>
-File: CIE_graph.png Graphic file (type png)
-<use CIE_graph.png>
-Package pdftex.def Info: CIE_graph.png  used on input line 474.
-(pdftex.def)             Requested size: 149.09395pt x 93.18098pt.
-
-Overfull \hbox (0.38512pt too wide) in paragraph at lines 474--477
-\OT1/cmr/m/n/8 435\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 8\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 546\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 1$ and $700\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 0\OML/cmm/m/it/8 nm$ \OT1/cmr/m/n/8 (ar-bi-tra-ry choo-sen) whe-re con-trol-led (dim-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 474--477
-
- []
-
-<cie.jpg, id=97, 1164.35pt x 1130.2225pt>
-File: cie.jpg Graphic file (type jpg)
-<use cie.jpg>
-Package pdftex.def Info: cie.jpg  used on input line 508.
-(pdftex.def)             Requested size: 173.94043pt x 168.83623pt.
-<Screenshot 2026-01-29 at 14.21.47.png, id=98, 807.015pt x 93.34875pt>
-File: Screenshot 2026-01-29 at 14.21.47.png Graphic file (type png)
-<use Screenshot 2026-01-29 at 14.21.47.png>
-Package pdftex.def Info: Screenshot 2026-01-29 at 14.21.47.png  used on input line 511.
-(pdftex.def)             Requested size: 248.48741pt x 28.74266pt.
-
-Overfull \hbox (31.842pt too wide) in paragraph at lines 506--513
-\OT1/cmr/m/n/8 For a gi-ven dis-play, the phos-pho-rous coor-di-na-tes $(\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )$
- []
-
-
-Overfull \hbox (18.48576pt too wide) in paragraph at lines 506--513
-\OT1/cmr/m/n/8 The un-knowns $\OML/cmm/m/it/8 C[]; C[]; C[]$ \OT1/cmr/m/n/8 re-sult from a known whi-te point $(\OML/cmm/m/it/8 X[]; Y[]; Z[]\OT1/cmr/m/n/8 )$
- []
-
-
-Overfull \hbox (3.11209pt too wide) detected at line 513
-[] \OT1/cmr/m/n/8 = [] \OMS/cmsy/m/n/8 ^^A []
- []
-
-[4 <./CIE_graph.png> <./cie.jpg> <./Screenshot 2026-01-29 at 14.21.47.png>]
-Overfull \hbox (1.31311pt too wide) in paragraph at lines 525--526
-[]\OT1/cmr/bx/n/8 Components: \OT1/cmr/m/n/8 Lu-mi-nance ($\OML/cmm/m/it/8 Y$\OT1/cmr/m/n/8 ), In-phase ($\OML/cmm/m/it/8 I$\OT1/cmr/m/n/8 , orange-blue, Hu-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 548--549
-
- []
-
-
-Overfull \hbox (2.60654pt too wide) in paragraph at lines 556--557
+Overfull \hbox (2.60654pt too wide) in paragraph at lines 479--480
 []\OT1/cmr/bx/n/8 RGB $\OMS/cmsy/m/n/8 !$ \OT1/cmr/bx/n/8 YUV: \OT1/cmr/m/n/8 Y = lu-mi-nance/-b-right-ness, UV = co-lor/chro-
  []
 
 
-Overfull \hbox (5.51825pt too wide) in paragraph at lines 558--559
+Overfull \hbox (5.51825pt too wide) in paragraph at lines 481--482
 \OT1/cmr/m/n/8 ted ma-trix (quan-ti-za-ti-on ta-ble), ag-gres-si-ve-ly com-press bottom-
  []
 
+<sampling.jpg, id=101, 647.41875pt x 567.11874pt>
+File: sampling.jpg Graphic file (type jpg)
+<use sampling.jpg>
+Package pdftex.def Info: sampling.jpg  used on input line 488.
+(pdftex.def)             Requested size: 248.48741pt x 217.67073pt.
+<Screenshot 2026-01-28 at 15.30.42.png, id=102, 664.4825pt x 186.6975pt>
+File: Screenshot 2026-01-28 at 15.30.42.png Graphic file (type png)
+<use Screenshot 2026-01-28 at 15.30.42.png>
+Package pdftex.def Info: Screenshot 2026-01-28 at 15.30.42.png  used on input line 490.
+(pdftex.def)             Requested size: 248.48741pt x 69.81766pt.
+[5 <./sampling.jpg> <./Screenshot 2026-01-28 at 15.30.42.png>]
+Overfull \hbox (0.35077pt too wide) in paragraph at lines 580--581
+\OT1/cmr/m/n/8 com-pa-ring va-lue. With $\OML/cmm/m/it/8 y[] \OMS/cmsy/m/n/8 2 \U/msb/m/n/8 R[]\OML/cmm/m/it/8 ; s[] \OT1/cmr/m/n/8 = \OML/cmm/m/it/8 f\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x[]; ^^R\OT1/cmr/m/n/8 )$, we get: $\OMS/cmsy/m/n/8 L\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 y; f\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; ^^R\OT1/cmr/m/n/8 )) =
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 571--572
+
+Overfull \hbox (2.35526pt too wide) in paragraph at lines 592--593
+[]\OT1/cmr/bx/n/8 Fourier Sli-ce Theo-rem: $\OML/cmm/m/it/8 G[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 !\OT1/cmr/m/n/8 ) = \OML/cmm/m/it/8 F\OT1/cmr/m/n/8 [\OML/cmm/m/it/8 f\OT1/cmr/m/n/8 ](\OML/cmm/m/it/8 ! []\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; ! []\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 ))$ whe-
+ []
+
+<other-cheatsheet/radon-back-projection.png, id=116, 773.7708pt x 180.675pt>
+File: other-cheatsheet/radon-back-projection.png Graphic file (type png)
+<use other-cheatsheet/radon-back-projection.png>
+Package pdftex.def Info: other-cheatsheet/radon-back-projection.png  used on input line 594.
+(pdftex.def)             Requested size: 248.48741pt x 58.02118pt.
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 594--595
+[][] 
+ []
+
+
+Overfull \hbox (3.32007pt too wide) in paragraph at lines 599--600
+[]\OT1/cmr/m/n/8 1D FT of pro-jec-ti-on da-ta, get $\OML/cmm/m/it/8 G[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 !\OT1/cmr/m/n/8 ) = \OML/cmm/m/it/8 F\OT1/cmr/m/n/8 [\OML/cmm/m/it/8 f\OT1/cmr/m/n/8 ](\OML/cmm/m/it/8 ! []\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; ! []\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 ))$
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 626--626
+\OT1/cmr/m/n/8 lo-cal ob-ject space to world
+ []
+
+
+Underfull \hbox (badness 1337) in paragraph at lines 626--626
+\OT1/cmr/m/n/8 space to ca-me-ra/view space,
+ []
+
+
+Underfull \hbox (badness 1831) in paragraph at lines 626--626
+\OT1/cmr/m/n/8 (tri-angles, li-nes, points) and
+ []
+
+
+Underfull \hbox (badness 5091) in paragraph at lines 626--626
+[]|\OT1/cmr/m/n/8 Clips geo-me-try against the
+ []
+
+
+Underfull \hbox (badness 1264) in paragraph at lines 626--626
+[]|\OT1/cmr/m/n/8 Calculates the co-lor of each
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 626--626
+[]|\OT1/cmr/m/n/8 Determines vi-si-bi-li-ty using
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 626--626
+\OT1/cmr/m/n/8 depth tes-ting (z-buffering)
+ []
+
+
+Underfull \hbox (badness 5847) in paragraph at lines 626--626
+[]|\OT1/cmr/m/n/8 Outputs the fi-nal ren-de-red
+ []
+
+[6 <./other-cheatsheet/radon-back-projection.png>]
+Underfull \hbox (badness 1412) in paragraph at lines 638--638
+\OT1/cmr/m/n/8 ments; in-ter-po-la-tes ver-tex at-tri-bu-tes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 638--641
 
  []
 
-<Screenshot 2026-01-31 at 15.58.28.png, id=111, 1074.0125pt x 312.16624pt>
+<other-cheatsheet/ciergb.png, id=125, 335.3328pt x 369.5406pt>
+File: other-cheatsheet/ciergb.png Graphic file (type png)
+<use other-cheatsheet/ciergb.png>
+Package pdftex.def Info: other-cheatsheet/ciergb.png  used on input line 661.
+(pdftex.def)             Requested size: 111.81857pt x 123.22311pt.
+
+Overfull \hbox (3.19627pt too wide) in paragraph at lines 656--673
+\OT1/cmr/m/n/8 Light is a elec-tro-ma-gne-tic ra-dia-ti-on at Fre-quen-cy (wa-ve-length $400\OML/cmm/m/it/8 nm$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 656--673
+
+ []
+
+<CIE_graph.png, id=126, 650.43pt x 406.51875pt>
+File: CIE_graph.png Graphic file (type png)
+<use CIE_graph.png>
+Package pdftex.def Info: CIE_graph.png  used on input line 675.
+(pdftex.def)             Requested size: 149.09395pt x 93.18098pt.
+
+Overfull \hbox (0.38512pt too wide) in paragraph at lines 675--678
+\OT1/cmr/m/n/8 435\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 8\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 546\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 1$ and $700\OML/cmm/m/it/8 :\OT1/cmr/m/n/8 0\OML/cmm/m/it/8 nm$ \OT1/cmr/m/n/8 (ar-bi-tra-ry choo-sen) whe-re con-trol-led (dim-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 675--678
+
+ []
+
+[7 <./other-cheatsheet/ciergb.png> <./CIE_graph.png>]
+<cie.jpg, id=140, 1164.35pt x 1130.2225pt>
+File: cie.jpg Graphic file (type jpg)
+<use cie.jpg>
+Package pdftex.def Info: cie.jpg  used on input line 709.
+(pdftex.def)             Requested size: 173.94043pt x 168.83623pt.
+<Screenshot 2026-01-29 at 14.21.47.png, id=141, 807.015pt x 93.34875pt>
+File: Screenshot 2026-01-29 at 14.21.47.png Graphic file (type png)
+<use Screenshot 2026-01-29 at 14.21.47.png>
+Package pdftex.def Info: Screenshot 2026-01-29 at 14.21.47.png  used on input line 712.
+(pdftex.def)             Requested size: 248.48741pt x 28.74266pt.
+
+Overfull \hbox (31.842pt too wide) in paragraph at lines 707--714
+\OT1/cmr/m/n/8 For a gi-ven dis-play, the phos-pho-rous coor-di-na-tes $(\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x[]; y[]\OT1/cmr/m/n/8 )$
+ []
+
+
+Overfull \hbox (18.48576pt too wide) in paragraph at lines 707--714
+\OT1/cmr/m/n/8 The un-knowns $\OML/cmm/m/it/8 C[]; C[]; C[]$ \OT1/cmr/m/n/8 re-sult from a known whi-te point $(\OML/cmm/m/it/8 X[]; Y[]; Z[]\OT1/cmr/m/n/8 )$
+ []
+
+
+Overfull \hbox (3.11209pt too wide) detected at line 714
+[] \OT1/cmr/m/n/8 = [] \OMS/cmsy/m/n/8 ^^A []
+ []
+
+
+Overfull \hbox (50.65721pt too wide) detected at line 716
+[] \OT1/cmr/m/n/8 = [] []
+ []
+
+
+Overfull \hbox (1.31311pt too wide) in paragraph at lines 730--731
+[]\OT1/cmr/bx/n/8 Components: \OT1/cmr/m/n/8 Lu-mi-nance ($\OML/cmm/m/it/8 Y$\OT1/cmr/m/n/8 ), In-phase ($\OML/cmm/m/it/8 I$\OT1/cmr/m/n/8 , orange-blue, Hu-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 753--754
+
+ []
+
+
+Overfull \hbox (2.60654pt too wide) in paragraph at lines 761--762
+[]\OT1/cmr/bx/n/8 RGB $\OMS/cmsy/m/n/8 !$ \OT1/cmr/bx/n/8 YUV: \OT1/cmr/m/n/8 Y = lu-mi-nance/-b-right-ness, UV = co-lor/chro-
+ []
+
+
+Overfull \hbox (5.51825pt too wide) in paragraph at lines 763--764
+\OT1/cmr/m/n/8 ted ma-trix (quan-ti-za-ti-on ta-ble), ag-gres-si-ve-ly com-press bottom-
+ []
+
+[8 <./cie.jpg> <./Screenshot 2026-01-29 at 14.21.47.png>]
+<other-cheatsheet/change-coords.png, id=156, 1223.57124pt x 653.44125pt>
+File: other-cheatsheet/change-coords.png Graphic file (type png)
+<use other-cheatsheet/change-coords.png>
+Package pdftex.def Info: other-cheatsheet/change-coords.png  used on input line 793.
+(pdftex.def)             Requested size: 122.9759pt x 65.667pt.
+
+Overfull \hbox (2.2748pt too wide) in paragraph at lines 798--802
+[][] 
+ []
+
+<other-cheatsheet/perspective-projection.png, id=157, 1635.10875pt x 625.33624pt>
+File: other-cheatsheet/perspective-projection.png Graphic file (type png)
+<use other-cheatsheet/perspective-projection.png>
+Package pdftex.def Info: other-cheatsheet/perspective-projection.png  used on input line 803.
+(pdftex.def)             Requested size: 173.94043pt x 66.51624pt.
+
+Underfull \hbox (badness 1019) in paragraph at lines 812--814
+\OT1/cmr/m/n/8 Rotating a point $\OML/cmm/m/it/8 p \OT1/cmr/m/n/8 = [][]$ around axis $\OML/cmm/m/it/8 u \OT1/cmr/m/n/8 =
+ []
+
+
+Overfull \hbox (11.41048pt too wide) in paragraph at lines 827--830
+\OT1/cmr/bx/n/8 Zenith, Azi-muth: \OT1/cmr/m/n/8 Point $\OML/cmm/m/it/8 ! \OT1/cmr/m/n/8 = (\OML/cmm/m/it/8 ^^R; ^^^\OT1/cmr/m/n/8 )$ on unit sphe-re: $\OML/cmm/m/it/8 ![] \OT1/cmr/m/n/8 = [](\OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 ) [](\OML/cmm/m/it/8 ^^^\OT1/cmr/m/n/8 )$,
+ []
+
+
+Underfull \hbox (badness 1189) in paragraph at lines 832--838
+\OT1/cmr/bx/n/8 Irradiance: $\OML/cmm/m/it/8 E\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 ) = \OML/cmm/m/it/8 d\OT1/cmr/m/n/8 ^^H(\OML/cmm/m/it/8 A\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 =dA\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 )$ flux per unit area
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 832--838
+\OT1/cmr/bx/n/8 Radiance: $\OML/cmm/m/it/8 L\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; !\OT1/cmr/m/n/8 ) = \OML/cmm/m/it/8 dI\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 !\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 =dA\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 ) =
+ []
+
+
+Underfull \hbox (badness 1874) in paragraph at lines 832--838
+\OML/cmm/m/it/8 d[]\OT1/cmr/m/n/8 ^^H(\OML/cmm/m/it/8 A\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 =\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 d! dA\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x\OT1/cmr/m/n/8 ) [] \OML/cmm/m/it/8 ^^R\OT1/cmr/m/n/8 )$ flux per so-lid an-gle per perp.
+ []
+
+
+Overfull \hbox (15.91048pt too wide) in paragraph at lines 840--845
+\OT1/cmr/bx/n/8 Reflection equa-ti-on: $[][] \OML/cmm/m/it/8 f[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; ![]; ![]\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 L[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; ![]\OT1/cmr/m/n/8 ) [] \OML/cmm/m/it/8 ^^R[] d![] \OT1/cmr/m/n/8 = \OML/cmm/m/it/8 L[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 x; ![]\OT1/cmr/m/n/8 )$. 
+ []
+
+<other-cheatsheet/phong-shading.png, id=158, 484.6908pt x 118.2819pt>
+File: other-cheatsheet/phong-shading.png Graphic file (type png)
+<use other-cheatsheet/phong-shading.png>
+Package pdftex.def Info: other-cheatsheet/phong-shading.png  used on input line 866.
+(pdftex.def)             Requested size: 134.15616pt x 32.73787pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 865--868
+[]\OT1/cmr/m/n/8 Linear in-ter-po-la-ti-on of ver-tex nor-mals, ba-ry-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 865--868
+\OT1/cmr/m/n/8 cen-t-ric in-ter-po-la-ti-on of nor-mals on tri-angles.
+ []
+
+[9 <./other-cheatsheet/change-coords.png> <./other-cheatsheet/perspective-projection.png>]
+<other-cheatsheet/transparency.png, id=169, 546.1203pt x 280.1667pt>
+File: other-cheatsheet/transparency.png Graphic file (type png)
+<use other-cheatsheet/transparency.png>
+Package pdftex.def Info: other-cheatsheet/transparency.png  used on input line 872.
+(pdftex.def)             Requested size: 149.09395pt x 76.48819pt.
+
+Overfull \hbox (4.61673pt too wide) in paragraph at lines 871--876
+\OT1/cmr/m/n/8 cing spe-cu-lar term, with re-flec-ti-on from mi-cro fa-cets, self-shadowing... 
+ []
+
+
+Overfull \hbox (1.486pt too wide) in paragraph at lines 886--888
+\OT1/cmr/bx/n/8 Implicit \OT1/cmr/m/n/8 re-pr. ea-si-ly test in-si-de/out-si-de, com-pact sto-ra-ge, but samp-
+ []
+
+
+Underfull \hbox (badness 1418) in paragraph at lines 897--898
+\OT1/cmr/m/n/8 Tex-ture $(\OML/cmm/m/it/8 u; v\OT1/cmr/m/n/8 )$ coords to geom. $(\OML/cmm/m/it/8 x; y; z\OT1/cmr/m/n/8 )$ coords. Is-su-es:
+ []
+
+
+Underfull \hbox (badness 1286) in paragraph at lines 897--898
+\OT1/cmr/m/n/8 ali-a-sing, level-of-detail, (e.g. sphe-re map-ping: $(\OML/cmm/m/it/8 u; v\OT1/cmr/m/n/8 ) \OMS/cmsy/m/n/8 !
+ []
+
+
+Overfull \hbox (8.5559pt too wide) in paragraph at lines 902--903
+[]\OT1/cmr/m/n/8 Gaussian (low-pass, se-pa-ra-ble). Clo-ser pi-xels ha-ve hig-her weight 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 906--909
+
+ []
+
+<Screenshot 2026-01-31 at 15.58.28.png, id=170, 1074.0125pt x 312.16624pt>
 File: Screenshot 2026-01-31 at 15.58.28.png Graphic file (type png)
 <use Screenshot 2026-01-31 at 15.58.28.png>
-Package pdftex.def Info: Screenshot 2026-01-31 at 15.58.28.png  used on input line 578.
+Package pdftex.def Info: Screenshot 2026-01-31 at 15.58.28.png  used on input line 920.
 (pdftex.def)             Requested size: 248.48741pt x 72.22066pt.
-<Screenshot 2026-01-28 at 13.22.38.png, id=112, 531.9875pt x 533.995pt>
+<other-cheatsheet/image.png, id=171, 631.60968pt x 170.13562pt>
+File: other-cheatsheet/image.png Graphic file (type png)
+<use other-cheatsheet/image.png>
+Package pdftex.def Info: other-cheatsheet/image.png  used on input line 921.
+(pdftex.def)             Requested size: 248.48741pt x 66.93413pt.
+<other-cheatsheet/bresenham-line.png, id=172, 492.1587pt x 151.767pt>
+File: other-cheatsheet/bresenham-line.png Graphic file (type png)
+<use other-cheatsheet/bresenham-line.png>
+Package pdftex.def Info: other-cheatsheet/bresenham-line.png  used on input line 925.
+(pdftex.def)             Requested size: 149.09395pt x 45.97507pt.
+[10 <./other-cheatsheet/phong-shading.png> <./other-cheatsheet/transparency.png> <./Screenshot 2026-01-31 at 15.58.28.png> <./other-cheatsheet/image.png (PNG copy)>]
+Overfull \hbox (19.36545pt too wide) detected at line 944
+\OML/cmm/m/it/8 b[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 ) = (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 t\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 b[] \OT1/cmr/m/n/8 + \OML/cmm/m/it/8 tb[];  b[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 ) = (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 t\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 b[] \OT1/cmr/m/n/8 + \OML/cmm/m/it/8 tb[];  b[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 ) = (1 \OMS/cmsy/m/n/8 ^^@ \OML/cmm/m/it/8 t\OT1/cmr/m/n/8 )\OML/cmm/m/it/8 b[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 ) + \OML/cmm/m/it/8 tb[]\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 )
+ []
+
+
+Overfull \hbox (10.49783pt too wide) in paragraph at lines 962--964
+\OT1/cmr/m/n/8 mes-hes using suc-ces-si-ve re-fi-ne-ment (sub-di-vi-si-on), con-ver-ging to smooth
+ []
+
+
+Overfull \hbox (4.35857pt too wide) in paragraph at lines 964--965
+[]\OT1/cmr/bx/n/8 Interpolating \OT1/cmr/m/n/8 (new points are in-ter-po-la-ti-on of con-trol points)
+ []
+
+
+Overfull \hbox (7.8097pt too wide) in paragraph at lines 970--976
+\OT1/cmr/bx/n/8 Planar sha-dows: \OT1/cmr/m/n/8 draw pro-jec-ti-on of obj. on ground. No self-shadows,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 970--976
+
+ []
+
+
+Overfull \hbox (1.05905pt too wide) in paragraph at lines 983--984
+[]\OT1/cmr/bx/n/8 Ray-surface in-ter-sec-ti-ons: \OT1/cmr/m/n/8 Ray equa-ti-on $\OT1/cmr/bx/n/8 r\OT1/cmr/m/n/8 (\OML/cmm/m/it/8 t\OT1/cmr/m/n/8 ) = \OT1/cmr/bx/n/8 o \OT1/cmr/m/n/8 + \OML/cmm/m/it/8 t\OT1/cmr/bx/n/8 d$\OT1/cmr/m/n/8 . \OT1/cmr/bx/n/8 Sphe-
+ []
+
+
+Overfull \hbox (0.61847pt too wide) in paragraph at lines 987--990
+[]\OT1/cmr/bx/n/8 Accelerate: \OT1/cmr/m/n/8 in-tro-du-ce uni-form grids or space par-ti-tio-ning trees. 
+ []
+
+<Screenshot 2026-01-28 at 13.22.38.png, id=182, 531.9875pt x 533.995pt>
 File: Screenshot 2026-01-28 at 13.22.38.png Graphic file (type png)
 <use Screenshot 2026-01-28 at 13.22.38.png>
-Package pdftex.def Info: Screenshot 2026-01-28 at 13.22.38.png  used on input line 588.
+Package pdftex.def Info: Screenshot 2026-01-28 at 13.22.38.png  used on input line 1014.
 (pdftex.def)             Requested size: 124.2437pt x 124.70662pt.
-[5 <./Screenshot 2026-01-31 at 15.58.28.png> <./Screenshot 2026-01-28 at 13.22.38.png>] (./visual_computing.aux)
+[11 <./other-cheatsheet/bresenham-line.png>] [12
+
+
+ <./Screenshot 2026-01-28 at 13.22.38.png>] (./visual_computing.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.47998pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 35875 strings out of 476025
- 717346 string characters out of 5790016
- 1900388 words of memory out of 5000000
- 55670 multiletter control sequences out of 15000+600000
- 519037 words of font info for 58 fonts, out of 8000000 for 9000
+ 36049 strings out of 476025
+ 721405 string characters out of 5790016
+ 1903388 words of memory out of 5000000
+ 55809 multiletter control sequences out of 15000+600000
+ 521709 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,19n,117p,527b,1034s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/wasy-type1/wasy8.pfb>
-Output written on visual_computing.pdf (5 pages, 1775047 bytes).
+ 108i,19n,117p,851b,1030s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/wasy-type1/wasy8.pfb>
+Output written on visual_computing.pdf (12 pages, 2837872 bytes).
 PDF statistics:
- 309 PDF objects out of 1000 (max. 8388607)
- 226 compressed objects within 3 object streams
- 40 named destinations out of 1000 (max. 500000)
- 450 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 444 PDF objects out of 1000 (max. 8388607)
+ 324 compressed objects within 4 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 612 words of extra memory for PDF output out of 10000 (max. 10000000)
 

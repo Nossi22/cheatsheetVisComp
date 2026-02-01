@@ -137,17 +137,36 @@
 
 \section{The digital image}
 A digital image is a discrete representation of a continuous 2D function $I(x,y)$. In sensors the analog digital has to be converted by an ADC (analog to digital converter). 
+Some challenges with images: transmission interference, compression artifacts, spilling, scratches, sensor noise, low contrast or resolution, motion blur.
+\begin{subbox}{Charge coupled device (CCD)}
+An array of photosites (a bucket of electrical charge) hold charge proportional to incident light intensity during exposure. Charges move down through sensor array, ADC (analog-digital-converter) measures line-by-line.
+\begin{itemize}
+  \item \textbf{Blooming:} Oversaturated photosites cause vertical channels to flood (bright vertical line)
+  \item \textbf{Bleeding/Smearing:} While charge in transit, bright light hits photosites above (worse with shorter shutter times, electrical shutters only)
+  \item \textbf{Dark current:} Thermally generated charge (random noise despite darkness), avoid by cooling; worsens with age
+  \item High \textbf{production cost} and \textbf{power consumption}
+\end{itemize}
+\end{subbox}
+\begin{subbox}{CMOS sensors}
+Mostly same as CCD, but each sensor has amplifier. Cheaper, lower power, no blooming, on-chip integration with other components, but less sensitive and more noise. Rolling shutter is an issue for sequential read-out of lines. Also susceptible to dark current.
+\end{subbox}
 During exposure the photons are accumulated in the sensor wells, with the accumulated charge being transferred line-by-line to the sense amplifiers which
 then pass the signal to the ADC. In CMOS sensors each pixel has its own amplifier and ADC.\\
 The pinhole camera takes picture through a small hole, but cant be infinitly small, there will always be blur, so we use a use lense.\\
 CDD is the more mature technology, with higher production cost, power consumsion, problem lies in Blooming and linearly readout.
 CMOS is the more recent technology that uses the same sensor as CDD, cheap, low power, less sensetiv, but enables smart pixels via other components on chip. Random accsess!
+We can sample an image (in 2D) in a cartesian grid, hexagonally, or in other non-uniform ways. \textbf{Undersampling} means loss of information and introduces aliasing: signals reconstructed incorrectly and higher frequencies incorrectly show up as lower frequency.
 If we're sampling a signal with a frequency $f_s$ we can only uniquely capture signals with frequencies up to $f_s/2$ (Nyquist frequency). 
 To reconstruct a continuous signal from the sample we could use biliner iterpolation:
 $$\hat{f}(x, y) = (1 - a)(1 - b)F_{i,j} + a(1 - b)F_{i+1,j} + abF_{i+1,j+1} + (1 - a)bF_{i,j+1}$$
 \includegraphics[width=0.6\columnwidth]{bilinear_interplation.png}\\
+\begin{subbox}{Nyquist-Shannon sampling theorem}
+Sample frequency must be at least twice as big as the highest frequency in the signal/image: $\omega_s > 2\,\omega_{\max}$ (strict inequality).
+\end{subbox}
 sampeling: how often we sample,\\
 Quantanizaion: how many bits per sample (color depth).\\
+\textbf{Geometric resolution:} number of pixels per area.\\
+\textbf{Radiometric resolution:} number of bits per pixel.\\
 
 \begin{subbox}{Noise ($\sigma$)}
 \begin{itemize}
@@ -157,6 +176,7 @@ Quantanizaion: how many bits per sample (color depth).\\
     
     \item \textbf{Poisson noise (shot noise):} To model scene-dependent noise, the poisson distribution can be used: $p(k) = \frac{\lambda^k e^{-\lambda}}{k!}$, where $\lambda$ is the signal average. Note that for large averages, the poisson distribution is similar to a gaussian distribution.
     
+    \item \textbf{Rician noise (MRI):} $p(I) = \frac{1}{\sigma^2} \exp\left(-\frac{I^2 + f^2}{2\sigma^2}\right) I_0\left(\frac{I f}{\sigma^2}\right)$
     \item \textbf{Salt-and-Pepper-Noise:} Random black and white pixels are typically caused by faulty sensors or memory errors, hard to describe mathematically, easily removed with median filter.
   
 \end{itemize}
@@ -168,8 +188,10 @@ There are a number of statistics that aim to quantify noise over an image. Among
     \item \textbf{Peak Signal-to-Noise-Ratio (PSNR):} $\sigma_{SNR} = \frac{F_{max}}{E[\sigma]}$. For most images, $F_{max}$ is 255.
 \end{itemize}
 \end{subbox}
+\textbf{Color camera concepts:} Prism (splitting light, 3 sensors, requires good alignment), Filter mosaic (coat filter on sensor, grid, introduces aliasing), Filter wheel (rotate filter in front of lens, static image), CMOS sensor (absorbing colors at different depths), Rolling shutter effect (sequential readout of pixels while camera is moving).
 \section{Image Segmentation}
 Classicfication problem where we partition image into disjoint segments.
+\textbf{Complete segmentation} of $I$: regions $R_1, \dots, R_N$ s.t. $I = \bigcup_{i=1}^{N} R_i$ and $R_i \cap R_j = \emptyset$ for $i \ne j$.
 \subsection{Thresholding}
 Choose a threshold $T$ and classify pixels as foreground or background depending on whether their intensity is above or below $T$. For color images, use distance in color space instead of intensity to gage similarity.
 \begin{align*}
@@ -183,6 +205,10 @@ $c_\text{ref}^i\in \mathbb{N}^3$ and then using the Mahalanobis distance to clas
 \Sigma = \frac{1}{N-1}\sum_{i=1}^{N} (c_\text{ref}^{i} - \mu)(c_\text{ref}^{i} - \mu)^{T}\\
 B(x,y) = \begin{cases} 1 & \text{if } (I(x,y) - \mu)^{T}\Sigma^{-1}(I(x,y) - \mu) > T, \\ 0 & \text{else} \end{cases}
 \end{align*}
+\textbf{Chromakeying:} choose a special background color $\mathbf{x}$, then segmentation using $I_\alpha = \lVert\mathbf{I} - \mathbf{x}\rVert > T$. Issues: hard $\alpha$-mask, variation not same in 3 channels.
+\begin{subbox}{Receiver operating characteristic (ROC)}
+ROC curve describes performance of binary classifier. Plots (y-axis, sensitivity, $\text{TP}/(\text{TP}+\text{FN})$, TPR) against (x-axis, 1-specificity, $\text{FP}/(\text{FP}+\text{TN})$, FPR). We can choose operating point with gradient $\beta = \frac{N}{P} \cdot \frac{V_{\text{TN}} + C_{\text{FP}}}{V_{\text{TP}} + C_{\text{FN}}}$ where $V$ is value and $C$ cost.
+\end{subbox}
 As with any classification problem, we can evaluate it using ROC curves. In the script the positive class is the foreground.
 \begin{align*}
 \text{TPR(Recall)} &= \frac{\text{TP}}{\text{TP} + \text{FN}}\quad 
@@ -207,6 +233,14 @@ of the standard deviation.
 \subsection{Clustering}
 We can group pixels in different ways, like intensity similarity, color similarity, texture similarity, intensity+position similarity.
 Detects sperical clusters only.
+\subsection{Snakes}
+Active contour (polygon) where each point on contour moves away from seed while inclusion criteria in neighborhood is met, often with smoothness constraint. Iteratively minimize energy $E = E_{\text{tension}} + E_{\text{stiffness}} + E_{\text{image}}$.
+\subsection{Distance measures $I_\alpha$}
+\begin{itemize}
+  \item Plain BG subtraction: $\mathbf{I}_\alpha = \lvert\mathbf{I} - \mathbf{I}_{\text{bg}}\rvert$
+  \item \textbf{Mahalanobis:} $\mathbf{I}_\alpha = \sqrt{(\mathbf{I} - \mu)^T \Sigma^{-1} (\mathbf{I} - \mu)}$ where $\Sigma$ is the BG image's covariance matrix: $\Sigma_{ij} = \mathbb{E}[(X_i - \mu_i)(X_j - \mu_j)^T]$, estimate from $n \ge 3$ data points: $\frac{1}{n-1}\sum_{i=1}^n (x_i - \mu)(x_i - \mu)^T$.
+\end{itemize}
+Needs thresholds: $\mathbf{I}_\alpha > \mathbf{T}$ ($T \in \mathbb{R}^3$ RGB, gray $\mathbb{R}$).
 \subsection{Markov Random Fields}
 Also want to enforce region constrains like spacial consistency and smooth borders.
 To achieve this we encode the cost of flipping labels as well as dependencies
@@ -229,6 +263,7 @@ $K$ is a regularization term that penalizes different labels between connected p
 \end{subbox}
 This can be modeled as a graph min-cut problem as follows:
 \includegraphics[width=\columnwidth]{segmentation_graph_cut.png}
+Solve with graph cuts, source = FG, sink = BG. Minimize energy in polynomial time using MinCut. To get decent results, we need \textbf{alpha estimation / border matting} along edges.
 
 \section{Convolution \& Correlation}
 Linear, shift-invariant, associative,commutative (if dimensions identical).
@@ -258,6 +293,66 @@ Gradient direction: $\theta = \tan^{-1}(\frac{\partial f/\partial y}{\partial f/
 Gradient magnituted (edge strength): $|\nabla f| = \sqrt{(\frac{\partial f}{\partial x})^2 + (\frac{\partial f}{\partial y})^2}$\\
 Bc of Noise the edges are not well defined, so we smooth the image first with a Gaussian and then compute the gradient (convolution theroem, we can just ableiten the kernel and then convolve with image $\partial/\partial x  (f * g)= f * \partial g/\partial x$).
 
+\section{Image Filtering}
+Modify pixels on some function of local neighb.\
+\textbf{Shift-invariant}: same for all pixels, $K$ not dependent on pos.\\
+\textbf{Linear}: linear combination of neighb.\\
+\textbf{Local}: output only depends on pixels in its neighbors (not global).\\
+\begin{subbox}{Correlation}
+Template matching: $I' = K \circ I$\
+$I(x, y) = \sum_{(i, j) \in N(x, y)} K(i, j) I(x + i, y + j)$
+\end{subbox}
+\begin{subbox}{Convolution}
+Point spread function: $I' = K * I$\
+$I'(x, y) = \sum_{(i, j) \in N(x, y)} K(i, j) I(x - i, y - j)$\
+Linear, associative, shift-invariant, commutative (if dimensions are identical). For the continuous case: $g(x) = f(x) * k(x) = \int_{\mathbb{R}} f(a) k(x - a) \, da$
+\end{subbox}
+The 2 operations are the same with reversed kernels.\\
+\textbf{Filtering near edges:} clip to black, wrap around, copy edge, reflect across edge, vary filter.\\
+\textbf{Separable:} kernel $K(m, n) = f(m) g(n)$, if the kernel matrix has rank 1 it's separable because it's the outer product of two vectors.\\
+The Gaussian kernel is rot. symmetric, single lobe (neighbor's influence decreases monotonically, also in frequency domain), FT is again a Gaussian, separable, easily made efficient.\\
+Laplacian is rot. invariant (isotropic), usually more noisy since it uses 2nd derivative.\\
+\textbf{Image sharpening:} enhances edges by increasing high frequency components: $I' = I + \alpha \lvert k * I \rvert$ where $k$ high-pass filter, $\alpha \in [0, 1]$.
+
+\section{Edge Detection}
+\begin{subbox}{Laplacian operator}
+Find 0s in 2nd deriv $I''$ to locate edges. Rot. invariant, yields very noisy but thin and uninterrupted edges. Sensitive, blur first (Laplacian of Gaussian) or suppress edges with low gradient magnitude.
+\end{subbox}
+$$\text{LoG}(x, y) = - \frac{1}{\pi \sigma^4} \left(1 - \frac{x^2 + y^2}{2 \sigma^2}\right) \exp\left(-\frac{x^2 + y^2}{2 \sigma^2}\right)$$
+$$\nabla^2 f(x, y) = \frac{\partial^2 f(x, y)}{\partial x^2} + \frac{\partial^2 f(x, y)}{\partial y^2}$$
+DoG can approximate LoG.
+\begin{subbox}{Canny edge detector}
+Thin, uninterrupted edges, no guarantee on the connectivity of edges, extended more completely than with simple thresh.
+\begin{itemize}
+  \item Smooth image with Gaussian filter
+  \item Compute grad. mag. and orient. (Sobel, Prewitt, ...): $M(x, y) = \sqrt{(\partial f/\partial x)^2 + (\partial f/\partial y)^2}$, $\alpha(x, y) = \tan^{-1}\left(\frac{\partial f/\partial y}{\partial f/\partial x}\right)$
+  \item Nonmaxima suppression: quantize edges normal to 4 dirs, if smaller than either neighb. suppress
+  \item Double thresholding (hysteresis): $T_{\text{high}}, T_{\text{low}}$, keep if $\ge T_{\text{high}}$ or $\ge T_{\text{low}}$ and 8-conn. through $\ge T_{\text{low}}$ to $T_{\text{high}}$ px.
+\end{itemize}
+\end{subbox}
+\begin{subbox}{Hough transformation}
+Fits a curve (line, circles, ...) to set of edge pixels (e.g. $y = m x + c$)
+\begin{itemize}
+  \item Subdivide $(m, c)$ plane into discrete bins init to 0
+  \item Draw line in $(m, c)$ plane for each edge pixel $(x, y)$, increment bins by 1 along line
+  \item Detect peaks in $(m, c)$ plane.
+\end{itemize}
+Infinite slopes arise, reparameterize line with $(\theta, \rho)$: $x \cos \theta + y \sin \theta = \rho$. For circles with known radius: $(x - a)^2 + (y - b)^2 = r^2$, else 3D Hough.
+\end{subbox}
+\textbf{Corner detection:} Define local displacement sensitivity: $S(\Delta x, \Delta y) = \sum_{(x, y) \in \text{window}} (f(x, y) - f(x + \Delta x, y + \Delta y))^2$.
+Using Taylor approximation and $\mathbf{M}$:
+$$f(x + \Delta x, y + \Delta y) \approx f(x, y) + f_x(x, y)\Delta x + f_y(x, y)\Delta y$$
+$$\mathbf{M} = \sum_{(x, y) \in \text{window}} \begin{bmatrix} f_x^2(x, y) & f_x(x, y) f_y(x, y) \\ f_x(x, y) f_y(x, y) & f_y^2(x, y) \end{bmatrix}$$
+$$S(\Delta x, \Delta y) \approx \begin{bmatrix} \Delta x & \Delta y \end{bmatrix} \mathbf{M} \begin{bmatrix} \Delta x \\ \Delta y \end{bmatrix}$$
+\begin{subbox}{Harris corner detection}
+Compute matrix $\mathbf{M}$. Compute $C(x, y) = \det(\mathbf{M}) - k\,\text{trace}(\mathbf{M})^2 = \lambda_1 \lambda_2 - k (\lambda_1 + \lambda_2)^2$. Mark as corner if $C(x, y) > T$. Do non max-suppression and for better localization, weight central pixels with weights for sum in $\mathbf{M}$: $G(x - x_0, y - y_0, \sigma)$. Compute subpixel localization by fitting parabola to cornerness function.
+\end{subbox}
+\includegraphics[width=0.7\columnwidth]{other-cheatsheet/harris-corner-detection.png}\\
+Can be made \textbf{scale-invariant} by looking for strong responses to \textbf{DoG filter} over scale space, then consider loc. max. in both position and scale space (see SIFT).
+\begin{subbox}{Lowe's Scale Invariant Feature Transform (SIFT)}
+Used to track feature points over 2 images. Look for strong responses in Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring gradient mag. bc lighting etc.) at selected scale, pos., rot. by choosing principal direction. Now both pictures are at the same scale \& orientation, compare gradient histog. to find matching points. $\text{DoG}(x, y) = \frac{1}{k} e^{-(x^2 + y^2)/(k\sigma)^2} - e^{-(x^2 + y^2)/(\sigma^2)}$, $k = \sqrt{2}$.
+\end{subbox}
+
 
 \section{Fourier Transform}
 $$F(u) = \int_{-\infty}^{\infty} f(x)e^{-i2\pi ux} dx,$$
@@ -280,6 +375,14 @@ $u$ and $v$ determine frequency and orientation of the basis function. Pluggin $
   \item \textbf{Magnitude spectrum} tells you how much of each frequency is present (energy distribution).
   \item \textbf{Phase spectrum} tells you how those frequencies are aligned in space, and this is what gives an image its actual structure.
 \end{itemize}
+Discrete FT: $F = \mathbf{U} f$ where $F$ transformed image, $\mathbf{U}$ FT base, $f$ vectorized image. $F(u, v) = \sum_{x = 0}^{M - 1} \sum_{y = 0}^{N - 1} f(x, y) \cdot \exp\left(-i 2\pi \left(\frac{u x}{M} + \frac{v y}{N}\right)\right)$, Dual Transform: $f(-x) = F(F(f))(x)$.
+\textbf{Relevant:} $\cos(x) = \frac{e^{i x} + e^{-i x}}{2}$, $\sin(x) = \frac{e^{i x} - e^{-i x}}{2i}$, $\operatorname{sinc}(u) = \frac{\sin(u)}{u}$, $\int_{-\infty}^{\infty} e^{-2\pi i x u} \, dx = \delta(u)$.
+\textbf{Dirac delta:} $\delta(x) = 0$ if $x \ne 0$ else undefined.
+\begin{itemize}
+  \item $\int_{-\infty}^{\infty} \delta(x) \, dx = 1$, $\delta(\alpha x) = \delta(x) / |\alpha|$ and $\delta(-t) = \delta(t)$
+  \item $(\delta * f)(x) = \int_{-\infty}^{\infty} f(t) \delta(x - t) \, dt = f(x)$, e.g. $\delta(u - k) * f(u) = f(u - k)$
+\end{itemize}
+\textbf{Sampling:} multiplication with a sequence of $\delta$-functions, \textbf{Fourier Rotation Theorem}: $F[f \circ R] = F[f] \circ R$ for rotation matrix $R$.
 \textbf{Convolution theorem}:$$f(x,y) * h(x,y) \iff F(u,v) \cdot H(u,v)(\text{(element wise)})$$
 
 \begin{table}[h]
@@ -302,6 +405,12 @@ Deriv. Fourier & $x^n f(x)$ & $i^n \frac{d^n}{du^n} F(u)$ \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\includegraphics[width=\columnwidth]{other-cheatsheet/fourier-transforms.png}
+
+\begin{subbox}{Image restoration}
+Image degradation is applying kernel $h$ to some image $f$. The inverse $\tilde{h}$ should compensate: $f(x) \to h(x) \to g(x) \to \tilde{h}(x) \to f$. Determine with $F(\tilde{h})(u, v) = F(h)(u, v) = 1$. Cancellation of freq., noise amplif. Regularize using $\tilde{F}(\tilde{h})(u, v) = F(h) / (|F(h)|^2 + \epsilon)$.
+\end{subbox}
 
 \vspace{1em}
 
@@ -332,6 +441,11 @@ $e^{-a x^2}$ & $\sqrt{\frac{\pi}{a}} \exp\left(-\frac{\pi^2 u^2}{a}\right)$ \\
 
 
 \section{Unitary transforms (PCA / KL)}
+Images are vectorized row-by-row. Linear image processing algorithms can be written as $g = F f$. Auto-correlation fun.: $R_{ff} = \mathbb{E}[f_i f_i^H] = (F F^H) / n$.
+
+\textbf{Eigenmatrix:} $\Phi$ of autocorrelation matrix $R_{ff}$: $\Phi$ is unitary, columns form set of eigenvectors of $R_{ff}$: $R_{ff} \Phi = \Phi \Lambda$ where $\Lambda$ is a diag. matrix of eigenvecs. $R_{ff}$ is symmetric nonneg. definite, hence $\lambda_i \ge 0$, and normal: $R_{ff}^H R_{ff} = R_{ff} R_{ff}^H$.
+
+\textbf{Autocorrelation matrix:} $\mathbb{E}[X X^\top]$, unlike covariance matrix, we do not subtract the mean here ($\mathbb{E}[(X - \mu) (X - \mu)^\top]$).
 \begin{mainbox}{Karhunen-Loeve/(PCA)}
         \begin{itemize}
             \item \textbf{Normalize} (remove brightness var.): 
@@ -354,9 +468,20 @@ $e^{-a x^2}$ & $\sqrt{\frac{\pi}{a}} \exp\left(-\frac{\pi^2 u^2}{a}\right)$ \\
 \end{mainbox}
 
 \subsection{Eigenfaces, Fisherfaces}
+Simple recognition, compare in projected space, find nearest neighbour. Find face by computing reconstr. error and minimizing by varying patch pos. Compress data and visualization. Eigenfaces struggle with lighting differences. Fisherfaces improve this by maximizing between-class scatter, minimzing within-class scatter.
+
+\subsection{LDA / Fisherfaces}
+Find directions where ratio between/within individual variance is maximized (i.e. minimizing within class difference, maximizing between-class difference).
 
 \subsection{JPEG Compression}
 JPEG and JPG are the same format; JPG exists because older Windows versions required 3-letter extensions.
+\begin{itemize}
+  \item \textbf{RGB $\to$ YUV:} Y = luminance/brightness, UV = color/chrominance. Humans more sensitive to color $\Rightarrow$ compress colors with \textbf{chroma subsampling} (e.g., use color of upper-left pixel for 4×4 grid).
+  \item \textbf{Block DCT:} Split image into 8×8 blocks for each YUV component, apply 2D DCT. Results in 64 values: top-left = low freq., bottom-right = high freq. DCT is a variant of DFT with fast implementation and only real values.
+  \item \textbf{Quantization:} Compress using integer division with weighted matrix (quantization table), aggressively compress bottom-right (high freq.). Then zig-zag run-length encoding followed by Huffman coding.
+\end{itemize}
+\textbf{Properties:} High compression (10–100×), 24-bit colors. \textbf{Artifacts:} incorrect colors, aliasing, softened edges (sharp edges require high frequencies).\\
+\textbf{JPEG2000:} Uses Haar wavelet transform globally (not just 8×8 blocks) on successively downsampled image (image pyramid).
 
 
 \section{Sampling}
@@ -413,6 +538,68 @@ $$
 Sometimes there isn't a unique solution to the system, like when a patch contains only an edge moving to the right with no corner visible (gradient in one direction is zero).\\
 The algorithm fails however if the intensity structure in the patch is insufficient (e.g. flat region, edge) or the movement is too large.
 To mitigate these issues the algorithm is run on increasingly finer scales of the image with the previous coarser scale's flow used as initialization for the next finer scale. 
+\textbf{Aperture problem:} when flow is computed for point along linear feature (e.g. edge), not possible to determine exact location of corresponding point in second image, only possible to determine the flow normal to linear feature, 2 unknowns for every pixel $(u, v)$ but only one equation $\Rightarrow \infty$ solutions, opt. flow defines a line in $(u, v)$ space, compute normal flow. Need additional constraints to solve.
+\begin{subbox}{Iterative refinement}
+Estimate OF with Lucas-Kanade. Warp image using estimated OF. Estimate OF again using warped image. Refine estimate by repeating. Fails if intensity structure poor / large mov.
+\end{subbox}
+\begin{subbox}{Coarse-to-fine estimation}
+Create levels by gradual subsampling. Start at coarsest level, estimate OF, iterate and add until reached finest level. Result is OF at finest level.
+\end{subbox}
+Still fails if large lighting changes happen.
+\begin{subbox}{Affine motion}
+Each pixel provides 1 lin. constr., 6 global unknowns. Solve LSE. From bright. const. eq.:
+$$ I_x (a_1 + a_2 x + a_3 y) + I_y (a_4 + a_5 x + a_6 y) + I_t \approx 0 $$
+\end{subbox}
+\textbf{SSD tracking:} Large displacements, extract template around pixel, match within search area, use correlation, choose best match.\\
+\textbf{Bayesian Optical flow:} Some low-level human motion illusions can be explained by adding an uncertainty model to LK. E.g. bright. const. with noise.
+\section{Video Compression}
+Visual perception $<24$ Hz. Flicker $>60$ Hz in periphery. \textbf{Bloch's law:} if stimulus duration $\le 100$ ms, duration and brightness exchangeable. If brightness is halved, double duration. This enforces $>10$ Hz for videos.
+
+Interlaced video format: 2 temporally shifted half images (in bands) increases frequency, reduces spatial resolution. Full image repr. is progressive.
+
+\begin{subbox}{Video compression with temporal redundancy}
+Predict current frame based on previously coded frames. Introducing 3 types of coded frames:
+\begin{itemize}
+  \item I-frame: Intra-coded frame, coded independently
+  \item P-frame: Predictively-coded based on previously coded (P and I, H.264 can also allow B) frames (e.g. motion vec. + changes)
+  \item B-frame: Bi-directionally predicted frame, based on both previous and future frames. In older standards B-frames are never used as references for prediction of other frames.
+\end{itemize}
+\end{subbox}
+Inefficient for many scene changes or high motion.
+
+\begin{subbox}{Motion-compensated prediction}
+Partition video into moving objects -- generally pretty difficult. Practical: \textbf{block-matching motion est.}: partition each frame into blocks, describe motion of block / find best matching block in reference frame. No obj. det., good perf. Can be sped up with 3 step log search, and improve precision with half-pixel motions. We encode the residual error (with JPG). Motion vector field (set of motion vec. for each block in frame) is easy to encode, fast, simple, periodic.
+\end{subbox}
+\textbf{MPEG Group of Pictures (GOP)} starts with I-frame, ends with B- (open) or P-frame (closed).
+
+\section{CNN and Radon Transform}
+Given input $x$, learning target $y$, loss function $\mathcal{L}$ compute kernel weights $\theta$ using prediction $f(x, \theta)$: $\arg\min_{\theta} \mathcal{L}(y, f(x, \theta))$. Linear classifier $f(x, \theta) = W x + b$ where $\theta = \{W, b\}$. Use activation func. $\phi$ (sigmoid, \textbf{ReLU}, tanh, ...) to introduce non-linearity. Use gradient descent and back propagation (recursive appl. of chain rule to compute gradients) to find $\theta$. Transformers, GANs, stable diffusion etc enable modern VC breakthroughs.
+
+Classification: $f(x_1, \theta)$ as score, take class with larger score. With $y_i \in \mathbb{N}, s_i = f(x_i, \theta)$, we get loss function: $\mathcal{L}(y, f(x, \theta)) = - \sum_{i = 1}^N \log \left(\frac{\exp(s_{i, y_i})}{\sum_j \exp(s_{i, j})}\right)$.
+
+Regression: $f(x_1, \theta)$ as value, can be used for classification by comparing value. With $y_i \in \mathbb{R}^n, s_i = f(x_i, \theta)$, we get: $\mathcal{L}(y, f(x, \theta)) = \sum_{i = 1}^N \|y_i - s_i\|^2$.
+
+\begin{subbox}{Radon transform}
+Given object with unknown density $f(x, y)$, find $f$ by sending rays from all dirs through object and measure absorption on the other side. Assume parallel beams for given angle and no spreading of beam. X-Ray along line $L$ at distance $s$ has intensity $I(s)$, travelling $ds$ reduces intens. by $dI$. reduction depends on intens. and optical density $u(s)$: $dI / I(s) = -u(s) ds$. $I_{\text{finish}} = I_{\text{start}} \exp(-R)$ where $R = \int_L u(s) \, ds$ for the path through the object $L$. Radon transform of $f(x, y)$: $R f(L) = \int_L f(x) |dx|$.
+
+With $(x, y) = (\rho \cos \theta - s \sin \theta, \rho \sin \theta + s \cos \theta)$ and $\rho$ the distance from the object center and $\theta$ the angle, $s$ the distance along the line, we get:
+$R(\rho, \theta) = \int u(x, y) \, ds$. We now want to find $u(x, y)$ given $R(\rho, \theta)$.
+\end{subbox}
+The continuous case of a radon transform of a function $u$ is:
+$$ R[u](\rho, \theta) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} u(x, y) \delta(\rho - x \cos \theta - y \sin \theta) \, dx \, dy $$
+\textbf{Properties of RT:} Linear, shifting input shifts the RT (does not affect angle), rotating input rotates RT by same angle, RT of 2D convolution is 1D convolution of RT with respect to $\rho$, i.e. $R(f *_\text{2D} g) = R(f) *_\text{1D} R(g)$, RHS with fixed $\theta$, convolution with respect to $\rho$.
+
+\textbf{Fourier Slice Theorem:} $G_\theta(\omega) = F[f](\omega \cos(\theta), \omega \sin(\theta))$ where $G_\theta(\omega) = \int_{-\infty}^{\infty} R[f](\rho, \theta)  \exp(-2 \pi i \omega \rho) \, d\rho = F[R[f](\rho, \theta)](\omega)$, 1D FT of projection at fixed angle $\theta$ is slice of 2D FT of image.
+
+\includegraphics[width=\columnwidth]{other-cheatsheet/radon-back-projection.png}
+
+\textbf{Back projection algorithm:} Given RT, find $u(x, y)$, apply for all proj. angles $\theta$:
+\begin{itemize}
+  \item Measure projection (attenuation) data, get $R[f](\rho, \theta)$ for fixed $\theta$
+  \item 1D FT of projection data, get $G_{\theta}(\omega) = F[f](\omega \cos(\theta), \omega \sin(\theta))$ as above
+  \item 2D inverse FT the above, then sum with previous image (backpropagate)
+\end{itemize}
+Requires precise attn. meas., sensitive to noise, unstable, blurring in final image (add high-pass filter in Fourier domain after 2nd step to prevent).
 \section{Convolution and Filtering}
 \section{General Graphics}
 Graphics Pipeline Stages:\\
@@ -449,6 +636,7 @@ Fragment Processing & Performs per-fragment operations such as shading, texturin
 Display & Outputs the processed fragments to the framebuffer for final display. \\
 \hline
 \end{tabularx}
+Contemporary pipeline: CPU, Vector processing (per-vertex ops, transforms, lighting flow control), Rasterization, Fragment processing (per-fragment ops, shading, texturing, blending), Display.
 Vertex Shader example\\
 \begin{verbatim}
 uniform mat4 modelViewMatrix;
@@ -470,6 +658,19 @@ Spectral Power Distribution: \\
 $P(\lambda)=\text{intensity at wavelength }\lambda$.\\
 Our eye has 3 types of cones (S (blue),M (green),L (red)) with different sensitivity curves. Eye projects $P(\lambda)$ into 3D subspace
 using these three basis functions/vectors (two diffrent SPD might look exactly the same to us).\\
+\includegraphics[width=0.45\columnwidth]{other-cheatsheet/ciergb.png}\\
+\begin{subbox}{Color spaces}
+\begin{itemize}
+  \item \textbf{RGB}: useful for displays, RGB colors specified
+  \item \textbf{CIE XYZ}: change of basis to avoid negative comps. From xyY via $X = (xY)/y$, $Y=Y$, $Z = Y/y - (xY)/y - Y$
+  \item \textbf{CIE xyY}: chromaticity $(x,y)$ derived by normalizing XYZ: $x = X/(X+Y+Z)$, $y = Y/(X+Y+Z)$, $z=1-x-y$
+  \item \textbf{CIE RGB}: (435.8, 546.1, 700.0nm). Linear combination span triangle, the color gamut
+  \item \textbf{CMY}: inverse (subtractive) to RGB. CMY = 1 - RGB
+  \item \textbf{YIQ}: Luminance Y, In-phase I (orange-blue), Quadrature Q (purple-green), NTSC norm
+  \item \textbf{HSV / HLS}: hue, saturation, value/lightness; intuitive for artists
+  \item \textbf{CIELAB / CIELUV}: perceptually uniform color space
+\end{itemize}
+\end{subbox}
 \subsection{CIE}
 \includegraphics[width=0.6\columnwidth]{CIE_graph.png}\\
 $435.8, 546.1$ and $700.0 nm$ (arbitrary choosen) where controlled (dimmed/increased) by observers to match a simulus color. Result is seen above, $x$ is frequency and $y$ is the dimmed strength that the participents did.
@@ -511,6 +712,10 @@ Using these we can easilu convert from RGB to XYZ:
 \includegraphics[width=\columnwidth]{Screenshot 2026-01-29 at 14.21.47.png}
 The unknowns $C_R, C_G, C_B$ result from a known white point $(X_\omega, Y_\omega, Z_\omega)$ for $1=R=G=B$:
 $$\begin{bmatrix} X_\omega \\ Y_\omega \\ Z_\omega \end{bmatrix} = \begin{bmatrix} x_R & x_G & x_B \\ y_R & y_G & y_B \\ (1 - x_R - y_R) & (1 - x_G - y_G) & (1 - x_B - y_B) \end{bmatrix} \cdot \begin{bmatrix} C_R \\ C_G \\ C_B \end{bmatrix}$$
+\begin{subbox}{White point calibration}
+$$\begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} x_R C_R & x_G C_G & x_B C_B \\ y_R C_R & y_G C_G & y_B C_B \\ (1-x_R-y_R) C_R & (1-x_G-y_G) C_G & (1-x_B-y_B) C_B \end{bmatrix} \begin{bmatrix} R \\ G \\ B \end{bmatrix}$$
+Set $(R,G,B)=(1,1,1)$ and map to given white point in xyz (e.g. $(0.9505,1,1.0890)$), then find $C_R,C_G,C_B$.
+\end{subbox}
 \subsection{CMY color space}
 \begin{itemize}
     \item \textbf{Passive Systems:} Used for printers (subtractive mixing).
@@ -569,13 +774,234 @@ Iteratively apply approximation filter + downsampler.
 \end{subbox}
 \section{Transforms}
 Rigid Transform: Orthogonal transform + translation.\\
+Change position \& orientation of objects, project to screen, animating objects, ... \textbf{Homogeneous coordinates} can represent affine maps (translation) with mat.-mul. Add dimension, project vertices $\begin{bmatrix} x & y & z & w \end{bmatrix}^T$ onto $\begin{bmatrix} x / w & y / w & z / w & 1 \end{bmatrix}^T$.
+
+\begin{subbox}{Common transform matrices}
+\begin{tabular}{@{} l l @{} }
+Translation & $\begin{bmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Scale & $\begin{bmatrix} s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Rot. $x$ & $\begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta & 0 \\ 0 & \sin\theta & \cos\theta & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Rot. $y$ & $\begin{bmatrix} \cos\theta & 0 & \sin\theta & 0 \\ 0 & 1 & 0 & 0 \\ -\sin\theta & 0 & \cos\theta & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Rot. $z$ & $\begin{bmatrix} \cos\theta & -\sin\theta & 0 & 0 \\ \sin\theta & \cos\theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Shear & $\begin{bmatrix} 1 & 0 & sh_x & 0 \\ 0 & 1 & sh_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$
+\end{tabular}
+\end{subbox}
+\textbf{Rigid transforms:} translation, rotation, (sometimes includes reflection). \textbf{Linear:} Rotation, Scaling, Shear. \textbf{Projective transforms:} Rigid + Linear + Persp. + Paral.\\
+\textbf{Commutativity} ($M_1 M_2 = M_2 M_1$) holds for: (translation, translation), (rotation, rotation in 2D), (scaling, scaling), (scaling, rotation).
+
+\begin{subbox}{Change of coordinate system}
+\includegraphics[width=0.55\columnwidth]{other-cheatsheet/change-coords.png}\\
+$\mathbf{p}' = \underbrace{\begin{bmatrix} \mathbf{r}_1 & \mathbf{r}_2 & \mathbf{r}_3 & \mathbf{t} \\ 0 & 0 & 0 & 1 \end{bmatrix}}_{\mathbf{M}} \begin{bmatrix} p_x \\ p_y \\ p_z \\ 1 \end{bmatrix}$\\
+Transforming a normal: $\mathbf{n}' = (\mathbf{M}^{-1})^T \mathbf{n} = (\mathbf{M}^T)^{-1} \mathbf{n}$
+\end{subbox}
+
+\begin{tabular}{@{} l l @{} }
+Parallel (orthographic) projection & $\mathbf{M}_{\text{ort}} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$ \\
+Perspective projection & $\mathbf{M}_{\text{per}} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 1/d & 0 \end{bmatrix}$
+\end{tabular}
+
+\includegraphics[width=0.7\columnwidth]{other-cheatsheet/perspective-projection.png}
+
+\begin{subbox}{Quaternions}
+Similar to $\mathbb{C}$, define $i^2 = j^2 = k^2 = - 1$, $i j k = -1$, $i j = k$, $j i = -k$, $j k = i$, $k j = -i$, $k i = j$, $i k = -j$. For $q = a + b i + c j + d k$:
+\begin{itemize}
+  \item $\|q\| = \sqrt{a^2 + b^2 + c^2 + d^2}$, $z \overline{z} = \|z\|^2$
+  \item $\overline{z} = a - b i - c j - d k$ and $z^{-1} = \overline{z} / \|z\|^2$
+  \item For $z_1 = s_1 + v_1, z_2 = s_2 + v_2$ (where $s_i \in \mathbb{R}$): $z_1 z_2 = s_1 s_2 - v_1 \cdot v_2 + s_1 v_2 + s_2 v_1 + v_1 \times v_2$ where last term is sum of all components of cross product vector
+\end{itemize}
+Rotating a point $p = \begin{bmatrix} x & y & z \end{bmatrix}^T$ around axis $u = \begin{bmatrix} u_1 & u_2 & u_3 \end{bmatrix}$ by angle $\theta$:
+\begin{itemize}
+  \item Convert $p$ to quaternion $p_Q = x i + y j + z k$
+  \item Convert $u$ to quaternion $q'' = u_1 i + u_2 j + u_3 k$, normalize $q' = q'' / \|q''\|$
+  \item Rotate quaternion $q = \cos(\theta/2) + q' \sin(\theta/2)$ and $q^{-1} = \cos(\theta/2) - q' \sin(\theta/2)$
+  \item Rotated point $p' = q p q^{-1}$. Convert to cartesian.
+\end{itemize}
+\end{subbox}
 \section{Phong shading}
 To reflect a vector $a$ across another vector $b$:
 $$\mathbf{a}_{reflected} = 2\frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}}\mathbf{b} - \mathbf{a}$$
+\section{Lighting \& Shading}
+Lighting: Modelling physical interactions between materials and light sources.\\
+Shading: Process of determining color of pixel.
+
+\textbf{Solid angle:} $\Omega = A / r^2$ steradians (where $r$ radius).\\
+\textbf{Zenith, Azimuth:} Point $\omega = (\theta, \phi)$ on unit sphere: $\omega_x = \sin(\theta) \cos(\phi)$, $\omega_y = \sin(\theta) \sin(\phi)$, $\omega_z = \cos(\theta)$.\\
+\textbf{Energy of photon:} $(h c) / \lambda$ J.
+
+\begin{subbox}{Basic quantities of radiometry}
+\textbf{Flux:} $\Phi(A)$ total amount of energy passing through surface or space per unit time $[\text{J}/\text{s} = \text{W}]$.\\
+\textbf{Luminous flux:} $\int P(\lambda) V(\lambda)\, d\lambda$. Perceived power of light weighted by human sensitiv. $[\text{lumen}]$.\\
+\textbf{Irradiance:} $E(x) = d\Phi(A)/dA(x)$ flux per unit area arriving at surface $[\text{W}/\text{m}^2]$.\\
+\textbf{Radiosity:} $B(x) = d\Phi(A)/dA(x)$ flux per unit area leaving a surface $[\text{W}/\text{m}^2]$.\\
+\textbf{Radiant / Luminous Intensity:} $I(\omega) = d\Phi / d\omega$ outgoing flux per solid angle $[\text{W}/\text{sr}]$, $\Phi = \int_{S^2} I(\omega)\, d\omega$.\\
+\textbf{Radiance:} $L(x, \omega) = dI(\omega)/dA(x) = d^2\Phi(A)/(d\omega\, dA(x) \cos\theta)$ flux per solid angle per perp. area.
+\end{subbox}
+
+\textbf{Lambert's cosine law:} Irradiance at surface is proportional to cosine of angle of incident light and surface normal: $E = (\Phi / A) \cos \theta$.\\
+\textbf{BRDF:} $f_r(x, \omega_i, \omega_r) = \frac{dL_r(x, \omega_r)}{dE_i(x, \omega_i)} = \frac{dL_r(x, \omega_r)}{L_i(x, \omega_i) \cos\theta_i \, d\omega_i}$.\\
+\textbf{Reflection equation:} $\int_{H^2} f_r(x, \omega_i, \omega_r) L_i(x, \omega_i) \cos\theta_i \, d\omega_i = L_r(x, \omega_r)$.\\
+\textbf{Types of reflections:} Ideal specular (perfect mirror), ideal diffuse (uniform reflection all directions), Glossy specular (majority light distributed in reflection direction), retro-reflective (reflects light back towards source).\\
+\textbf{Attenuation:} $f_{\text{att}} = 1 / d_L^2$ due to spatial radiation; local illumination only considers direct light, global illumination also considers indirect light.
+
+\begin{subbox}{Phong Illumination Model}
+Approximate specular reflection by cosine powers:
+$$ I_\lambda = I_{a\lambda} k_a O_{d\lambda} + f_{\text{att}} I_{p\lambda} \left[k_d O_{d\lambda}(N \cdot L) + k_s (R \cdot V)^n\right] $$
+$I_a$ ambient light intensity, $k_a$ ambient light coefficient, $I_p$ directed light source intensity, $k_d$ diffuse reflection coefficient, $\theta \in [0, \pi/2]$ angle surface normal $N$ and light source vector $L$, attenuation factor $f_{\text{att}}$, $O_{d\lambda}$ value of spectrum of object color at the point $\lambda$, $R$ is $L$ reflected along the normal $N$ ($R = 2N(N \cdot L) - L$), $V$ is direction towards viewer, $n$ determines shape of highlight.
+\end{subbox}
+
+\section{Shading models}
+Flat shading: one color per primitive/polygon.
+\begin{subbox}{Gouraud Shading}
+Linear interpolation of vertex intensities.
+\begin{itemize}
+  \item Calculate face normals
+  \item Calculate vertex normals by averaging (weighted by angle)
+  \item Evaluate illumination model for each vertex
+  \item Interpolate vertex colors bilinearly on the current scan line
+\end{itemize}
+Problems with scan line interpolation are perspective distortion, orientation dependence, shared vertices, incorrect highlights. Quality depends on size of polygons.
+\end{subbox}
+\begin{subbox}{Phong Shading}
+Linear interpolation of vertex normals, barycentric interpolation of normals on triangles.
+\includegraphics[width=0.6\columnwidth]{other-cheatsheet/phong-shading.png}\\
+Properties: Lagrange ($x=a \Rightarrow n_x = n_a$), Partition of unity ($\lambda_a + \lambda_b + \lambda_c = 1$), Reproduction ($\lambda_a a + \lambda_b b + \lambda_c c = x$). Problems: normal not defined/representative.
+\end{subbox}
+Flat, Gouraud in screen space, Phong in obj. space, e.g. to get Gouraud shading we can move the code from Phong shading from fragment shader to vertex shader (only calculate for each vertex, then interpolate).
+
+\textbf{Transparency:} (2 obj., $P_1$ \& $P_2$). Perceived intensity $I_\lambda = I'_{\lambda 1} + I'_{\lambda 2}$ where $I'_{\lambda 1}$ is emission of $P_1$ and $I'_{\lambda 2}$ is intensity filtered by $P_1$. We model it as follows: $I_\lambda = I_{\lambda 1} \alpha_1 \Delta t + I_{\lambda 2} e^{-\alpha_1 \Delta t}$ where $\alpha$ absorption, $\Delta t$ thickness.\\
+\includegraphics[width=0.6\columnwidth]{other-cheatsheet/transparency.png}\\
+Linearization: $I_\lambda = I_{\lambda 1} \alpha_1 \Delta t + I_{\lambda 2} (1 - \alpha_1 \Delta t)$. If last object, set $\Delta t = 1$. Problem: rendering order, sorted traversal of polygons and back-to-front rendering.\\
+\textbf{Back-to-front} order not always clear, resort to depth peeling, multiple passes, each pass renders next closest fragment.
+We need more advanced lighting models for metal objects (Cook-Torrence), replacing specular term, with reflection from micro facets, self-shadowing...
 \section{Geometry and Textures}
+Considerations: Storage, acquisition of shapes, creation of shapes, editing shapes, rendering shapes.
+
+\textbf{Explicit} repr. can easily model complex shapes, and sample points, but take lots of storage.
+\begin{itemize}
+  \item Subdivision surface: define surfaces by primitives, use recursive algorithm for refining
+  \item Point set surfaces: store points as surface
+  \item Polygonal meshes: explicit set of vertices with position, possibly with additional information. Intersection of polygons: either empty, vertex, edge.
+  \item Triangle meshes, NURBS, etc.
+\end{itemize}
+\textbf{Implicit} repr. easily test inside/outside, compact storage, but sampling expensive, hard to model.
+\begin{itemize}
+  \item Algebraic surfaces, constructive solid geometry, level set methods, blobby surfaces, fractals
+\end{itemize}
+Need to store textures as bitmaps, hence param. complex surfaces.
+
+\textbf{Manifolds:} surface homeomorphic to disk, closed manifolds divide space into two. In manifold mesh there are at most two faces sharing an edge and each vertex has a 1-connected ring of faces around it (or 1-connected half-ring (i.e. boundary)).
+
+\textbf{Mesh data structures:} Locations, how vertices are connected, attributes such as normals, color etc. Must support rendering, geometry queries, modifications. E.g. \textbf{Triangle list} (list of 3 points, redundant, e.g. STL) or \textbf{Indexed Face set} (array of vertices + list of indices, e.g. OBJ, OFF, WRL, costly queries, modifications).
+
+\begin{subbox}{Texture mapping}
+Enhance details without additional geom. complexity. Map Texture $(u, v)$ coords to geom. $(x, y, z)$ coords. Issues: aliasing, level-of-detail, (e.g. sphere mapping: $(u, v) \to (\sin u \sin v, \cos v, \cos u \sin v)$). We want low-distortion, bijective mapping, efficiency.
+\end{subbox}
+\textbf{Bandlimiting:} Restrict amplitude of spectrum to zero for frequency beyond cut-off frequency.\\
+\textbf{Anti-aliasing filters:}
+\begin{itemize}
+  \item Gaussian (low-pass, separable). Closer pixels have higher weight
+  \item Sinc $S_{\omega_c}(x, y) = (\omega_c \operatorname{sinc}((\omega_c x)/\pi))/\pi \cdot (\omega_c \operatorname{sinc}((\omega_c y)/\pi))/\pi$ ideal low-pass filter, IIR filter. $\omega_c$ cutoff freq. Hard to implement, has infinite impulse response.
+  \item B-Spline: Allow for locally adaptive smoothing, adapt size of kernel to signal chars.
+\end{itemize}
+\textbf{Magnification:} for pixels mapping to area larger than pixel (jaggies), use bilinear interpolation.\\
+\textbf{Mipmapping:} Store texture at multiple resolutions, choose based on projected size of triangle (far away $\to$ lower res, interpol. possible), texels in larger level of mipmap hierarchy represent larger regions of texture (e.g. we halve resolution at each level). Avoids aliasing, improves efficiency, higher storage overhead. (minification)\\
+\textbf{Supersampling:} Multiple color samples per pixel, final color is average (uniform, jittering, stochastic, Poisson).\\
+
+\begin{subbox}{Texture maps}
+\textbf{Light map:} Simulate effect of local light source (pre-computed, dynamically adapted).\\
+\textbf{Environment map:} Mirror environment with imaginary sphere or cube for reflective objects.\\
+\textbf{Bump map:} Perturb surface normal according to texture, represents small-scale geometry. Limitations: no bumps on silhouette, no self-occlusions, no self-shadowing. Height stored as grayscale textures.\\
+\textbf{Displacement mapping:} Compared to bump map, displaces geometry, uses height map to displace points along surface normal.
+\end{subbox}
+\textbf{Procedural texture:} Generate texture from noise (Perlin, Gabor) from Gaussian pyramid of noise and summing layers with weights.\\
+\textbf{Perspective interpolation} in world-space can yield non-linear variation in screen-space. Optimal resampling filter is hence spatially variant.
 To map texture coordinates $(u,v)$ to tangent space we use the matrix $A$:
 $$\left[\begin{array}{cc} | & | \\ \vec{T} & \vec{B} \\ | & | \end{array}\right] = \mathbf{A} = \begin{bmatrix} x_2 & x_3 \\ y_2 & y_3 \\ z_2 & z_3 \end{bmatrix} \begin{bmatrix} u_2 & u_3 \\ v_2 & v_3 \end{bmatrix}^{-1}$$
 \includegraphics[width=\columnwidth]{Screenshot 2026-01-31 at 15.58.28.png}
+\includegraphics[width=\columnwidth]{other-cheatsheet/image.png}
+\section{Scan Conversion (Rasterization)}
+Generate discrete pixel values - approximate with finite amount.\\
+\textbf{Bresenham line:} choose closest pixel at each intersection. Fast decision, criterion based on midpoint $m$ and intersection point $q$. After computing first value $d$, we only need addition. E: $d_{\text{new}} = d_{\text{old}} + a$, NE: $d_{\text{new}} = d_{\text{old}} + a + b$, $d_0 = a + b/2$, use $a=\Delta y, b=-\Delta x$.
+\includegraphics[width=0.6\columnwidth]{other-cheatsheet/bresenham-line.png}
+
+\textbf{Scan conversion of polygons:}
+\begin{itemize}
+  \item Calculate intersections on scan line
+  \item Sort intersection points by ascending x-coords.
+  \item Fill spans between two consecutive intersection points if parity in interval is odd (so inside)
+\end{itemize}
+
+\section{B\'ezier Curves \& Splines}
+\begin{subbox}{B\'ezier Curves}
+$\mathbf{x}(t) = \mathbf{b}_0 B_0^n(t) + \dots + \mathbf{b}_n B_n^n(t)$ where $B_i^n$ are the Bernstein polyn. ($\binom{n}{i} = \frac{n!}{i!(n-i)!}$): $B_i^n(t) = \binom{n}{i} t^i (1-t)^{n-i}$ (partition of unity, pos. definite, recursion, symmetry). Coefficients $\mathbf{b}_0, \dots, \mathbf{b}_n$ are control points and define the control polygon.
+
+Degree is highest order, order is deg. + 1. B\'ezier curves have affine invariance (affine transf. of curve by affine transf. of control pts.), lie in convex hull of control polygon. Since $B_0^n(0)=B_n^n(1)=1$, they interpolate endpoints. Max. number of intersects of line with curve is $\le$ intersects with control polygon.
+\end{subbox}
+\textbf{Disadvantages:} global support of basis functions, new control pts yields higher degree, $C^r$ continuity between segments of B\'ezier curves.
+\textbf{de Casteljau:} Compute a triangular representation, successively interpolate (corner cutting):
+$$
+b_0^1(t) = (1 - t) b_0 + t b_1,\quad b_1^1(t) = (1 - t) b_1 + t b_2,\quad b_0^2(t) = (1 - t) b_0^1(t) + t b_1^1(t)
+$$
+
+\begin{subbox}{B-Spline functions}
+B-Spline curve $\mathbf{s}(u)$ built from piecewise polyn. bases $s(u) = \sum_{i=0}^k \mathbf{d}_i N_i^n(u)$. Coefficients $\mathbf{d}_i$ are de Boor points. Bases are piecewise, recursively defined polyn. over sequence of knots $u_0 < u_1 < u_2 < \dots$ defined by knot vector $T = [u_0, \dots, u_{k+n+1}]$.
+
+$$N_i^n(u) = N_i^{n-1}(u) \frac{u-u_i}{u_{i+n}-u_i} + N_{i+1}^{n-1}(u) \frac{u_{i+n+1}-u}{u_{i+n+1}-u_{i+1}}$$
+$$N_i^0(u) = \begin{cases} 1 & u \in [u_i, u_{i+1}] \\ 0 & \text{else} \end{cases}$$
+
+Partition of unity $\sum_i^k N_i^n(u) = 1$, positivity $N_i^n(u) \ge 0$, compact support $N_i^n(u) = 0$ for $u \notin [u_i, u_{i+n+1}]$, continuity $N_i^n$ is $(n-1)$ times differentiable, local control, affine invariant.
+\end{subbox}
+
+\textbf{Example:} $N_i^1(u) = \begin{cases} \frac{u-u_i}{u_{i+1}-u_i} & u \in [u_i, u_{i+1}] \\ \frac{u_{i+2}-u}{u_{i+2}-u_{i+1}} & u \in [u_{i+1}, u_{i+2}] \end{cases}$
+
+\textbf{de Boor algorithm:} generalizes de Casteljau, evaluate B-spline of degree $n$ at $u$, set $d_i^0 = d_i$, finally $d_0^n = s(u)$:
+$$d_i^k = (1 - a_i^k) d_i^{k-1} + a_i^k d_{i+1}^{k-1},\quad a_i^k = \frac{u - u_{i+k-1}}{u_{i+n} - u_{i+k-1}}$$
+Note that $a_i^k$ vanishes outside of $[u_{i+k-1}, u_{i+n}]$.
+
+\section{Subdivision Surfaces}
+Generalization of spline curves/surfaces allowing arbitrary control meshes using successive refinement (subdivision), converging to smooth limit surfaces, connecting splines and meshes.
+\begin{itemize}
+  \item \textbf{Interpolating} (new points are interpolation of control points) vs. \textbf{Approximating} (control points moved, new points added in-between)
+  \item \textbf{Primal} (faces are split) vs. \textbf{Dual} (vertices are split)
+\end{itemize}
+\textbf{Loop subdivision} (triangular meshes).\
+
+\section{Visibility and Shadows}
+\textbf{Painter's algorithm:} Render objects from furthest to nearest. Issues with cyclic overlaps/intersections.\\
+\textbf{Z-Buffer:} store depth to nearest obj for each px. Initialize to $\infty$, then iter. over polygons and update z-buffer. Limited resolution, non-linear, place far from camera.\\
+\textbf{Planar shadows:} draw projection of obj. on ground. No self-shadows, no shadows on other objects, curved surfaces.\\
+\textbf{Projective texture shadows:} Separate obstacles and receivers, compute b/w img. of obstacles from light, use as projective texture. Need to specify obstacle \& receiver, no self-shadows.\\
+\begin{subbox}{Shadow maps}
+Compute depths from light \& camera. For each px on camera plane, compute point in world coords., project onto light plane, compare $d(\mathbf{x}_L)$ (dist. from light source to projected point on light plane) to $z_L$ (dist light source to $x_L$). If $d(\mathbf{x}_L) < z_L$, then $x$ in shadow. Bias needed to avoid self-shadowing ($d(\mathbf{x}_L) + b < z_L$). Point to shadow can be outside field of view (use cubical shadow map or spot lights). Aliasing due to undersampling shadow map (filter result of depth test).
+\end{subbox}
+\textbf{Shadow volumes:} Explicitly represent volume of space in shadow. If polygon in volume, it is in shadow. Shoot ray from camera, increment each time boundary of shadow volume is intersected. If counter $> 0$, primitive is in shadow. Optimization: use silhouette edges only. Introduces a lot of new geometry, expensive to rasterize long skinny triangles. Objects must be watertight for silhouette optimizations. Rasterization of polygons must not overlap and not have a gap.
+
+\section{Ray Tracing}
+\begin{subbox}{}
+Send rays into scene to determine color of px. On obj. hit, send multiple rays (diffused, reflected, refracted) further until we hit light source, or reach some amount of bounces. Figure out whether point in shadow by shooting rays to all light sources. For anti-aliasing, use multiple rays per px. (Pipeline: Ray Generation, Intersection, Shading)
+\end{subbox}
+\textbf{Ray-surface intersections:} Ray equation $\mathbf{r}(t) = \mathbf{o} + t \mathbf{d}$. \textbf{Sphere:} $\|\mathbf{x} - \mathbf{c}\|^2 - r^2 = 0$ where $\mathbf{x}$ point of interest, $\mathbf{c}$ center, $r$ radius. Solve for $t$: $\|\mathbf{o} + t \mathbf{d} - \mathbf{c}\|^2 - r^2 = 0$. \textbf{Triangle:} Barycentric coords. $\mathbf{x} = s_1 \mathbf{p}_1 + s_2 \mathbf{p}_2 + s_3 \mathbf{p}_3$. Intersect: $(\mathbf{o} + t \mathbf{d} - \mathbf{p}_1) \cdot \mathbf{n} = 0$. Using $\mathbf{n} = (\mathbf{p}_2 - \mathbf{p}_1) \times (\mathbf{p}_3 - \mathbf{p}_1)$, we get $t = -((\mathbf{o} - \mathbf{p}_1) \cdot \mathbf{n}) / (\mathbf{d} \cdot \mathbf{n})$. Compute $s_i$, test whether $s_1 + s_2 + s_3 = 1$ and $0 \le s_i \le 1$.
+
+\textbf{Ray-tracing shading extensions:} Refraction, mult. lights, area lights for soft shadows, motion blur (sample objs, intersect in time), depth of field, cost: $O(N_x N_y N_o) = \#\text{px} \cdot \#\text{objects}$.
+
+\textbf{Accelerate:} introduce uniform grids or space partitioning trees.\\
+\textbf{Uniform grids:} Preprocess: compute bounding box, set grid res., rasterize objects, store refs. to objects. Traversal: incrementally rasterize rays - stop at intersection. Fast \& easy, but non-adaptive to scene geometry.\\
+\textbf{Space partitioning trees:} octree, kd-tree, bsp-tree, bounding volume hierarchies (BVH).
+
+\textbf{Notes:}
+\begin{itemize}
+  \item Model matrix: from object space to world coordinates, View matrix: from world coordinates to camera coordinates, Projection matrix: from camera coordinates to screen space
+  \item All 3D rot. matrices $R$ have property $R^{-1} = R^T$
+  \item B\'ezier curves are special cases of B-spline curves
+  \item Color buffer is updated only when depth test passed
+  \item Radiance is constant along a ray (in a vacuum)
+  \item Pinhole camera measures radiance
+  \item $f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i)$ is true for any valid BRDF function
+  \item If BRDF satisfies $\int_{\Omega} f_r(\omega_i, \omega_o) \, d\omega_i = 1$, all incoming energy is reflected
+  \item For a perfect mirror material, $f_r(\omega_i, \omega_o)$ is non-zero iff $\omega_i$ is reflection vec. of $\omega_o$ against surface normal
+  \item Due to persp. proj., barycentric coords. of values on a triangle of different depths are not an affine function of screen space positions
+\end{itemize}
+
 \section{Miscallaneous}
 \begin{itemize}
     \item $e^{i\pi} + 1 = 0$
