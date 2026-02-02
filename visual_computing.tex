@@ -540,7 +540,7 @@ Estimate OF with Lucas-Kanade. Warp image using estimated OF. Estimate OF again 
 Create levels by gradual subsampling. Start at coarsest level, estimate OF, iterate and add until reached finest level. Result is OF at finest level.
 \end{subbox}
 Still fails if large lighting changes happen.
-\begin{subbox}{Affine motion}
+\begin{subbox}{Affine motion (Ax + b)}
 Each pixel provides 1 lin. constr., 6 global unknowns. Solve LSE. From bright. const. eq.:
 $$ I_x (a_1 + a_2 x + a_3 y) + I_y (a_4 + a_5 x + a_6 y) + I_t \approx 0 $$
 \end{subbox}
@@ -585,55 +585,20 @@ Regression: $f(x_1, \theta)$ as value, can be used for classification by compari
 \end{itemize}
 Requires precise attn. meas., sensitive to noise, unstable, blurring in final image (add high-pass filter in Fourier domain after 2nd step to prevent).
 \section{General Graphics}
-Graphics Pipeline Stages:\\
-\begin{tabularx}{\columnwidth}{|l|X|}
-\hline
-Modeling Transform & Transforms objects from their local object space to world space by applying translation, rotation, and scaling operations. \\
-\hline
-Viewing Transform & Transforms objects from world space to camera/view space, positioning them relative to the camera's viewpoint. \\
-\hline
-Primitive Processing & Processes geometric primitives (triangles, lines, points) and prepares them for the rendering pipeline. \\
-\hline
-3D Clipping & Clips geometry against the view frustum to remove parts of primitives that fall outside the visible region. \\
-\hline
-Projection to Screen Space & Projects 3D coordinates onto a 2D screen space using perspective or orthographic projection. \\
-\hline
-Scan Conversion & Rasterizes geometric primitives into fragments/pixels, determining which pixels are covered by each primitive. \\
-\hline
-Lighting, Shading, Texturing & Calculates the color of each fragment based on lighting models, applies shading computations, and maps textures onto surfaces. \\
-\hline
-Occlusion Handling & Determines visibility using depth testing (z-buffering) to ensure that closer objects obscure farther ones. \\
-\hline
-Display & Outputs the final rendered image to the screen/framebuffer for presentation. \\
-\hline
-\end{tabularx}
-\section{Programmer's View}
-\begin{tabularx}{\columnwidth}{|l|X|}
-\hline
-Vertex Processing & Performs per-vertex operations including model transformations, lighting, and flow control. \\
-\hline
-Rasterization & Converts geometric primitives into fragments; interpolates vertex attributes (e.g., colors, texture coordinates) to generate per-pixel inputs for the fragment shader. \\
-\hline
-Fragment Processing & Performs per-fragment operations such as shading, texturing, and blending to determine the final pixel color. \\
-\hline
-Display & Outputs the processed fragments to the framebuffer for final display. \\
-\hline
-\end{tabularx}
-Contemporary pipeline: CPU, Vector processing (per-vertex ops, transforms, lighting flow control), Rasterization, Fragment processing (per-fragment ops, shading, texturing, blending), Display.
-Vertex Shader example\\
-\begin{verbatim}
-uniform mat4 modelViewMatrix;
-uniform vec3 lightPosition;
-attribute vec3 pos;
-attribute vec3 vertexNormal;
-varying vec3 lightDirection, normal;
-void main() {
-  vec4 vertexPosition = modelViewMatrix * pos;
-  lightDirection = vec3(lightPosition - vertexPosition);
-  normal = vertexNormal;
-  gl_Position = vertexPosition;
-}
-\end{verbatim}
+\textbf{Graphics Pipeline:}
+\begin{itemize}
+    \item \textbf{Modeling Transform:} Object space $\to$ world space (translate, rotate, scale)
+    \item \textbf{Viewing Transform:} World space $\to$ camera/view space
+    \item \textbf{Primitive Processing:} Prepare triangles, lines, points
+    \item \textbf{3D Clipping:} Remove geometry outside view frustum
+    \item \textbf{Projection:} 3D $\to$ 2D (perspective/orthographic)
+    \item \textbf{Scan Conversion:} Rasterize primitives to fragments/pixels
+    \item \textbf{Lighting/Shading/Text:} Compute fragment colors
+    \item \textbf{Occlusion:} Z-buffer depth testing
+    \item \textbf{Display:} Output to framebuffer
+\end{itemize}
+
+\textbf{Programmer's View:} Vertex Processing (per-vertex transforms, lighting) $\to$ Rasterization (interpolate attributes) $\to$ Fragment Processing (shading, texturing, blending) $\to$ Display.
 
 \section{Light and Color}
 Light is a electromagnetic radiation at Frequency (wavelength $400 nm$ to $700 nm$).
@@ -655,7 +620,7 @@ using these three basis functions/vectors (two diffrent SPD might look exactly t
 \subsection{CIE}
 \includegraphics[width=0.6\columnwidth]{CIE_graph.png}\\
 $435.8, 546.1$ and $700.0 nm$ (arbitrary choosen) where controlled (dimmed/increased) by observers to match a simulus color. Result is seen above, $x$ is frequency and $y$ is the dimmed strength that the participents did.
-Negativ light is not physically possible, was added bc participents could not recreate this color with just red, green and blue.\\
+Negativ light is not physically possible, was added bc participents could not recreate this color with just red, green and blue.
 \begin{align*}
  \text{reference} &=  \text{blue} + \text{green} - \text{red}\\
  \text{reference} + \text{red} &= \text{blue} + \text{green}
